@@ -1,6 +1,6 @@
 /* Zihan Wang Interactive CV · offline shell
    只缓存同源静态资源；AI 代理是跨域请求，不经过这里。 */
-const CACHE = 'zihan-cv-v7';
+const CACHE = 'zihan-cv-v8';
 const BASE = self.registration.scope;
 const url = function (p) { return new URL(p, BASE).href; };
 

@@ -45,7 +45,7 @@ if (stage) {
     camera.position.set(...h.p);
   }
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: window.matchMedia('(max-width:760px)').matches ? 'default' : 'high-performance' });
   renderer.setClearAlpha(0);
   renderer.setSize(W(), H());
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -623,10 +623,16 @@ if (stage) {
     if (e.buttons === 1 && (e.movementX || e.movementY)) userMoved = true;
   });
 
+  // 手机端限制到约 30fps：省电降温，不降 DPR / 抗锯齿 / 纹理质量
+  const MOBILE_FRAME_GAP = window.matchMedia('(max-width:760px)').matches ? 32 : 0;
+  let lastDraw = 0;
   let stepperRaf = 0;
-  function animate() {
+  function animate(ts) {
     if (!window.stepperActive) { stepperRaf = 0; return; }
     stepperRaf = requestAnimationFrame(animate);
+    if (MOBILE_FRAME_GAP && ts && ts - lastDraw < MOBILE_FRAME_GAP) return;
+    lastDraw = ts || performance.now();
+
     const dt = Math.min(clock.getDelta(), 0.05);
     const k = 42, c = 2 * Math.sqrt(k) * 0.9;
     assemblyVel += ((targetAssembly - assembly) * k - assemblyVel * c) * dt;

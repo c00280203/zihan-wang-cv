@@ -271,7 +271,11 @@ document.querySelectorAll('[id$="-overlay"][aria-hidden]').forEach((el) => {
     attributes: true, attributeFilter: ['aria-hidden']
   });
 });
-document.addEventListener('visibilitychange', syncBackdropVideos);
+document.addEventListener('visibilitychange', function () {
+  document.documentElement.classList.toggle('page-hidden', document.hidden);
+  syncBackdropVideos();
+});
+document.documentElement.classList.toggle('page-hidden', document.hidden);
 window.addEventListener('pageshow', syncBackdropVideos);
 syncBackdropVideos();
 

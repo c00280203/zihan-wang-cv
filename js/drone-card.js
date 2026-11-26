@@ -40,7 +40,7 @@
   let current = 0;
   let playing = true;
   let userImage = false;       // 上传后显示本地预览，暂停轮播
-  let cycleStart = 0, rafId = 0, retractTimer = 0;
+  let cycleStart = 0, cycleTimer = 0, retractTimer = 0;
   const CYCLE = 3000;
   const isOpen = function () { return overlay.getAttribute('aria-hidden') === 'false'; };
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -91,18 +91,19 @@
   }
 
   /* ---------- 自动轮播：3 秒，用户交互后固定 ---------- */
-  function tick(now) {
-    rafId = 0;
+  function tick() {
+    cycleTimer = 0;
     if (!isOpen() || !playing || userImage || overlay.classList.contains('retracting')) return;
+    const now = performance.now();
     if (!cycleStart) cycleStart = now;
     if (now - cycleStart >= CYCLE) { cycleStart = now; render(current + 1, true); }
-    rafId = requestAnimationFrame(tick);
+    cycleTimer = setTimeout(tick, Math.max(80, CYCLE - (now - cycleStart)));
   }
   function restartCycle() {
-    cycleStart = 0;
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = 0;
-    if (playing && !userImage && isOpen() && !overlay.classList.contains('retracting')) rafId = requestAnimationFrame(tick);
+    if (cycleTimer) clearTimeout(cycleTimer);
+    cycleTimer = 0;
+    cycleStart = performance.now();
+    if (playing && !userImage && isOpen() && !overlay.classList.contains('retracting')) cycleTimer = setTimeout(tick, CYCLE);
   }
   function setPlaying(v) {
     playing = v;
@@ -163,7 +164,7 @@
   }
   function closeCard() {
     if (!isOpen() || overlay.classList.contains('retracting')) return;
-    if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+    if (cycleTimer) { clearTimeout(cycleTimer); cycleTimer = 0; }
     hideProbe();
     overlay.classList.add('retracting');
     retractTimer = setTimeout(function () {
@@ -211,6 +212,7 @@
 
   /* ---------- GPS → 四个地图（无手填） ---------- */
   const readout = document.getElementById('drone-readout');
+  const diagEl = document.getElementById('drone-diag');
   const navNote = document.getElementById('drone-nav-note');
   const mapsBox = document.getElementById('drone-maps');
   const mapLinks = Array.prototype.slice.call(document.querySelectorAll('.drone-maps a[data-map]'));
@@ -232,6 +234,19 @@
     const pair = dict[key] || dict.none;
     readout.classList.toggle('good', key === 'found');
     readout.innerHTML = '<span class="en">' + pair[0] + '</span><span class="zh">' + pair[1] + '</span>';
+  }
+  function showDiag(result, state) {
+    if (!diagEl) return;
+    if (state !== 'exifnogps') { diagEl.hidden = true; diagEl.textContent = ''; return; }
+    const bits = [];
+    if (result && result.fmt) bits.push(result.fmt.toUpperCase());
+    if (result && result.make) bits.push(result.make);
+    if (result && result.model) bits.push(result.model);
+    const found = bits.length ? bits.join(' · ') : 'image metadata';
+    const en = 'Read: ' + found + '. No GPSInfo or latitude/longitude field exists in this file. If Photos shows a location, send the original file (not an edited or compressed copy) and try again.';
+    const zh = '已读到：' + found + '。这个文件里不存在 GPSInfo / 经纬度字段。若相册里显示位置，请改用“原图”发送（不要编辑版或压缩版）后再试。';
+    diagEl.innerHTML = '<span class="en">' + en + '</span><span class="zh">' + zh + '</span>';
+    diagEl.hidden = false;
   }
   function updateMaps() {
     const ok = !!coords;
@@ -321,7 +336,7 @@
     if (!exifrPromise) {
       exifrPromise = new Promise(function (resolve, reject) {
         const s = document.createElement('script');
-        s.src = 'js/vendor/exifr.full.umd.js?v=degfixv20261126';
+        s.src = 'js/vendor/exifr.full.umd.js?v=perfv20261126';
         s.async = true;
         s.onload = function () {
           if (window.exifr && typeof window.exifr.gps === 'function') resolve(window.exifr);
@@ -399,6 +414,27 @@
       }
     } catch (e) {}
     return null;
+  }
+
+  /* 通用 XMP 包扫描：HEIC / JPEG / TIFF 里的坐标有时只写在 XMP 里 */
+  function xmpFromBuffer(buffer) {
+    try {
+      const bytes = new Uint8Array(buffer);
+      const needle = 'http://ns.adobe.com/xap/1.0/';
+      let start = -1;
+      for (let i = 0; i < bytes.length - 32; i++) {
+        let ok = true;
+        for (let j = 0; j < needle.length; j++) {
+          if (bytes[i + j] !== needle.charCodeAt(j)) { ok = false; break; }
+        }
+        if (ok) { start = i; break; }
+      }
+      if (start < 0) return null;
+      let text = '';
+      for (let i = start; i < Math.min(bytes.length, start + 24000); i++) text += String.fromCharCode(bytes[i]);
+      const end = text.indexOf('</x:xmpmeta>');
+      return end > 0 ? text.slice(0, end + 12) : text;
+    } catch (e) { return null; }
   }
 
   function xmpValue(text, tag) {
@@ -483,6 +519,11 @@
       const webpCoords = coordsFromXmp(webpXmp);
       if (webpCoords) return { coords: webpCoords };
     }
+    const anyXmp = xmpFromBuffer(buffer);
+    if (anyXmp) {
+      const xmpCoords = coordsFromXmp(anyXmp);
+      if (xmpCoords) return { coords: xmpCoords };
+    }
 
     const exifr = await loadExifr();
     let gps = null;
@@ -501,7 +542,10 @@
     return {
       coords: null,
       fmt: sniffFormat(buffer, file),
-      hasMeta: !!(meta && Object.keys(meta).length) || webpTiff != null || !!webpXmp
+      hasMeta: !!(meta && Object.keys(meta).length) || webpTiff != null || !!webpXmp || !!anyXmp,
+      make: (meta && meta.Make) || '',
+      model: (meta && meta.Model) || '',
+      hasGpsField: !!(meta && (meta.latitude != null || meta.longitude != null || meta.GPSLatitude != null || meta.GPSLongitude != null || meta.GPS != null))
     };
   }
 
@@ -511,7 +555,7 @@
     const f = fileInput.files && fileInput.files[0];
     if (!f) return;
     const seq = ++uploadSeq;
-    coords = null; updateMaps(); say('reading');
+    coords = null; updateMaps(); say('reading'); showDiag(null, 'reading');
     const user = document.getElementById('drone-user-img');
     const url = URL.createObjectURL(f);
     if (user) {
@@ -545,13 +589,13 @@
         if (seq !== uploadSeq) return;
         if (result.coords) {
           coords = result.coords;
-          say('found');
+          say('found'); showDiag(result, 'found');
         } else if (result.hasMeta) {
-          say('exifnogps');
+          say('exifnogps'); showDiag(result, 'exifnogps');
         } else if (/^(heic|heif|avif|png|webp)$/.test(result.fmt)) {
-          say('stripped');
+          say('stripped'); showDiag(result, 'stripped');
         } else {
-          say('noexif');
+          say('noexif'); showDiag(result, 'noexif');
         }
         updateMaps();
       }).catch(function (err) {

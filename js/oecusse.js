@@ -46,7 +46,7 @@ if (stage) {
   // 斜俯视角：地形铺满画面，山体起伏、河谷与地块厚度同时可见
   camera.position.set(0.45, 0.62, 0.62);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: window.matchMedia('(max-width:760px)').matches ? 'default' : 'high-performance' });
   renderer.setSize(W(), H());
   renderer.setClearAlpha(0);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -426,10 +426,16 @@ if (stage) {
     }
   }
 
+  // 手机端限制到约 30fps：省电降温，不降 DPR / 抗锯齿 / 纹理质量
+  const MOBILE_FRAME_GAP = window.matchMedia('(max-width:760px)').matches ? 32 : 0;
+  let lastDraw = 0;
   let oecRaf = 0;
-  function animate() {
+  function animate(ts) {
     if (!window.oecusseActive) { oecRaf = 0; return; }
     oecRaf = requestAnimationFrame(animate);
+    if (MOBILE_FRAME_GAP && ts && ts - lastDraw < MOBILE_FRAME_GAP) return;
+    lastDraw = ts || performance.now();
+
     controls.update();
     renderer.render(scene, camera);
     updateLabels();
