@@ -30,7 +30,7 @@
       { k: /欧库西|东帝汶|大坝|洪水|省长/, a: '那是水务院想出海的机会，但他们不擅长对外沟通。欧库西省长是澳大利亚留学回来的，适应欧美交流方式，也喜欢高科技。我做洪水影响模拟网页、汇报材料和英文校对，并在双方之间翻译。' },
       { k: /永兴|110|尾款|交付|卡顿|瓦片/, a: '那套系统确实很差，界面把东西全摊开，用户不知道从哪用；瓦片贴图铺满整个水库，卡得厉害。我带队重做使用路径和界面，和甲方沟通两轮，最后验收拿回 110 万尾款。' },
       { k: /谷歌|google|面试/, a: '我投了软件工程师，简历过了、面试也做了，最后没过。我没有沮丧：这证明我拿到了和名校学生竞争的机会，而大部分人连面试机会都没有，尤其学校 QS 不那么靠前的同学。' },
-      { k: /成绩|二等二|绩点|gpa|学位|荣誉学士/, a: '如果问到成绩，我会如实说是二等二；简历上体现的是荣誉学士，SETU | BSc (Hons) in Software Development。' },
+      { k: /成绩|绩点|gpa|学位|荣誉学士|等级/, a: '我的简历只体现荣誉学士，SETU | BSc (Hons) in Software Development；成绩细节我就不展开了。' },
       { k: /比赛|建投|招投标|六随机|五区间/, a: '湖南「六随机五区间」的细则公开：很多项打分后分配权重，权重和为 1，报价权重一般较高。我读细则后做系数和报价预测。比赛没结束我就回学校了，学生以学业为主，不能耽误。' },
       { k: /步进电机|电机|STM32|闸门/, a: '最初学的就是给引脚通电，让步进电机按不同速度旋转；后来才做到 STM32 控制闸门和上拉皮带。' }
     ],
@@ -46,7 +46,7 @@
       { k: /oecusse|timor|dam|flood|governor/i, a: 'The institute wanted to go overseas but was not good at cross-border communication. The Governor of Oecusse had studied in Australia, was comfortable with Western-style exchange and liked high tech. I built the flood-impact page, wrote the report slides, checked the English and interpreted between both sides.' },
       { k: /yongxing|1\.1|delivery|million|tiling|slow/i, a: 'That system was genuinely poor: everything was dumped on one screen so users did not know where to start, and tiling the whole reservoir made it painfully slow. I led the redesign of the user flow and interface, and after two rounds with the client we passed acceptance and got a 1.1-million-yuan final payment.' },
       { k: /google|interview/i, a: 'I applied as a software engineer, my CV passed and I did the interviews, but I did not get it. I was not discouraged: it meant I had earned a seat alongside students from top universities, while most people never even get an interview, especially those from less prestigious schools.' },
-      { k: /grade|gpa|2:2|degree|honours/i, a: 'If asked directly, I say honestly that I got a 2:2. My CV shows the honours degree: SETU | BSc (Hons) in Software Development.' },
+      { k: /grade|gpa|degree|honours|classification/i, a: 'My CV lists the honours degree: SETU | BSc (Hons) in Software Development. I do not go into grade details.' },
       { k: /competition|bidding|six.random|five.interval/i, a: 'Hunan\'s "six-random, five-interval" rules are public: many items are scored and given weights that sum to 1, with price usually carrying a heavy weight. I read the rules and predicted coefficients and bids. I left before the competition ended because classes come first for a student.' },
       { k: /stepper|motor|stm32|gate/i, a: 'The basics were simply energising pins to make the stepper rotate at different speeds; later I moved on to STM32 controlling the sluice gate and the belt.' }
     ]

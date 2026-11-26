@@ -321,7 +321,7 @@
     if (!exifrPromise) {
       exifrPromise = new Promise(function (resolve, reject) {
         const s = document.createElement('script');
-        s.src = 'js/vendor/exifr.full.umd.js?v=exifv20261126';
+        s.src = 'js/vendor/exifr.full.umd.js?v=degfixv20261126';
         s.async = true;
         s.onload = function () {
           if (window.exifr && typeof window.exifr.gps === 'function') resolve(window.exifr);
