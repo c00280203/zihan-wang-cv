@@ -30,8 +30,11 @@ if (stage) {
     const mobile = window.innerWidth <= 860;
     const open = mobile ? { p:[0.40,1.75,4.7], t:[0.30,0.02,0] }
                         : { p:[0.34,1.38,3.55], t:[0.30,0.00,0] };
-    const close = mobile ? { p:[0.42,1.55,3.6], t:[0.40,0.02,0] }
-                         : { p:[0.30,1.10,2.75], t:[0.42,0.02,0] };
+    // 手机上卡片收起标题后，镜头略微推近并下移视点，让整块 PCB 居中占满舞台。
+    const close = mobile
+      ? (window.__rtuFullView ? { p:[0.42,1.32,3.45], t:[0.40,-0.28,0] }
+                              : { p:[0.42,1.55,3.6],  t:[0.40,0.02,0] })
+      : { p:[0.30,1.10,2.75], t:[0.42,0.02,0] };
     const q = Math.max(0, Math.min(1, a / 0.9));
     const k = q < 0.5 ? 4*q*q*q : 1 - Math.pow(-2*q + 2, 3)/2;
     return {
@@ -290,7 +293,7 @@ if (stage) {
   window.rtuAssembly = function () { return assembly; };
   window.rtuTarget = function () { return targetAssembly; };
   window.rtuAssembled = function () { return assembly >= 0.90; };
-  window.rtuReset = function () { targetAssembly = 0; assemblyVel = 0; focusLayer = -1; overScroll = 0; assemblyMarked = false; assemblyMarkedAt = 0; };
+  window.rtuReset = function () { targetAssembly = 0; assembly = 0; assemblyVel = 0; focusLayer = -1; overScroll = 0; assemblyMarked = false; assemblyMarkedAt = 0; };
   // 合成后点分层：把该层单独抬起展示（真正看到这一层）
   window.rtuSetLayer = function (i) {
     if (assembly < 0.90) return;

@@ -27,6 +27,8 @@ node_modules/
 !/css/
 !/js/
 !/proxy-ai/
+!/sw.js
+!/manifest.webmanifest
 
 # 本地备份与工作记录不进部署仓库
 .my_backup_flashy/

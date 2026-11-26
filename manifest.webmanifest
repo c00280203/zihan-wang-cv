@@ -1,0 +1,19 @@
+{
+  "name": "Zihan Wang — Interactive CV",
+  "short_name": "Zihan CV",
+  "description": "Zihan Wang (王子涵) — interactive CV",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#eef0ec",
+  "theme_color": "#7FA98D",
+  "icons": [
+    {
+      "src": "./assets/portrait/portrait-me.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

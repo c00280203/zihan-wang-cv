@@ -1,8 +1,8 @@
 /* 3D 场景按需加载：Three.js 与三个重场景只在点开对应卡片时下载。 */
 const LOADERS = {
-  oec: function () { return import('./oecusse.js?v=mobilefixv20261126'); },
-  rtu: function () { return import('./rtu.js?v=mobilefixv20261126'); },
-  stepper: function () { return import('./stepper.js?v=mobilefixv20261126'); }
+  oec: function () { return import('./oecusse.js?v=fullcardv20261126'); },
+  rtu: function () { return import('./rtu.js?v=fullcardv20261126'); },
+  stepper: function () { return import('./stepper.js?v=fullcardv20261126'); }
 };
 const pending = {};
 

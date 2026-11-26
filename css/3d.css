@@ -631,6 +631,8 @@ body::before{
 .to-arrow .ico{ width:11px; height:11px; }
 .contact-arrow .ico{ width:15px; height:15px; }
 .twin-close, .ta-close{ user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
+/* 手机上关闭键必须压在所有舞台标签之上，避免装配完成后被 LIVE 3D 角标挡住。 */
+@media (max-width:760px){ .twin-close, .ta-close{ z-index:9; } }
 .skill-chips{ display:flex; flex-wrap:wrap; gap:8px 18px; }
 .chip{
   display:inline-flex; align-items:center;
@@ -910,7 +912,14 @@ body.js .reveal.in{ opacity:1; transform:none; }
   .twin-overlay{ padding:8px; place-items:end center; }
   .twin-card{ width:100%; max-height:94svh; border-radius:20px; }
   .twin-head{ padding:20px 20px 14px; }
-  .twin-close{ top:12px; right:14px; backdrop-filter:none; -webkit-backdrop-filter:none; }
+  /* 手机上关闭键不参与任何毛玻璃/高光合成：半透明底 + inset 高光叠加在
+     圆角毛玻璃卡片上会被 iOS 当成透镜采样，出现右上角那团畸变。 */
+  .twin-close{
+    top:12px; right:14px;
+    background:#fff; border:1px solid rgba(17,19,17,.10);
+    box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none;
+    isolation:isolate;
+  }
   .twin-main{ grid-template-columns:1fr; gap:22px; padding:16px 20px 26px; }
   .twin-hint{ font-size:7.5px; }
 }
@@ -1080,7 +1089,13 @@ body.js .reveal.in{ opacity:1; transform:none; }
   .ta-overlay{ padding:8px; place-items:end center; }
   .ta-card{ width:100%; max-height:94svh; border-radius:20px; }
   .ta-head{ padding:20px 20px 14px; }
-  .ta-close{ top:12px; right:14px; backdrop-filter:none; -webkit-backdrop-filter:none; }
+  /* 同上：实体白底、实边、无内阴影/滤镜，避免右上角圆角采样畸变。 */
+  .ta-close{
+    top:12px; right:14px;
+    background:#fff; border:1px solid rgba(17,19,17,.10);
+    box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none;
+    isolation:isolate;
+  }
   .ta-body{ padding:16px 20px 22px; gap:16px; }
   .ta-list{ margin-bottom:12px; }
   .ta-list button{ padding:7px 9px; font-size:11px; }
@@ -1217,6 +1232,11 @@ body.js .reveal.in{ opacity:1; transform:none; }
 @media (max-width:760px){
   .oec-stage{ aspect-ratio:1/1; }
   .oec-label{ font-size:9px; padding:3px 7px; }
+  .oec-card .ta-close{
+    background:#18263a; border-color:rgba(255,255,255,.28);
+    box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none;
+    isolation:isolate;
+  }
 }
 @media (prefers-reduced-motion:reduce){ .oec-spin{ animation:none; } }
 
@@ -1276,6 +1296,15 @@ body.js .reveal.in{ opacity:1; transform:none; }
   .rtu-cue{ font-size:8px; }
   .rtu-brief{ font-size:11px; line-height:1.75; }
 }
+/* 手机上装配完成：标题和说明退场，整张卡就是这一块 PCB。 */
+@media (max-width:760px){
+  .rtu-card.fullview{ width:min(520px,100%); }
+  .rtu-card.fullview .ta-head, .rtu-card.fullview .rtu-brief{ display:none; }
+  .rtu-card.fullview .rtu-body{ padding:0; overflow:hidden; gap:0; }
+  .rtu-card.fullview .rtu-stage{ aspect-ratio:1/1; }
+  .rtu-card.fullview .rtu-cue{ bottom:18px; }
+  .rtu-card.fullview .rtu-badge{ left:12px; right:auto; }
+}
 @media (prefers-reduced-motion:reduce){ .rtu-cue{ animation:none; } }
 
 /* ============================================================
@@ -1325,6 +1354,15 @@ body.js .reveal.in{ opacity:1; transform:none; }
 @media (max-width:560px){
   .stepper-stage{ aspect-ratio:1/1; }
   .stepper-stage .rtu-cue{ font-size:8px; }
+}
+/* 手机上装配完成：卡片只剩 3D 舞台，一台完整步进电机占满视野。 */
+@media (max-width:760px){
+  .stepper-card.fullview{ width:min(520px,100%); }
+  .stepper-card.fullview .ta-head, .stepper-card.fullview .rtu-brief{ display:none; }
+  .stepper-card.fullview .stepper-body{ padding:0; overflow:hidden; gap:0; }
+  .stepper-card.fullview .stepper-stage{ aspect-ratio:1/1; }
+  .stepper-card.fullview .rtu-cue{ bottom:18px; }
+  .stepper-card.fullview .rtu-badge{ left:12px; right:auto; }
 }
 
 /* ============================================================
