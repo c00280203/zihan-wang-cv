@@ -53,13 +53,19 @@
     }
   ];
 
-  // 预加载图片，切换时不闪
-  const imgs = PROJECTS.map(function (p) {
+  // 图片在首次打开卡片时才加载：首屏不下载隐藏弹层里的截图
+  const imgs = PROJECTS.map(function () {
     const im = document.createElement('img');
-    im.src = p.img; im.alt = ''; im.loading = 'lazy';
+    im.alt = ''; im.loading = 'lazy';
     shot.appendChild(im);
     return im;
   });
+  let imgsLoaded = false;
+  function loadImgs() {
+    if (imgsLoaded) return;
+    imgsLoaded = true;
+    imgs.forEach(function (im, i) { im.src = PROJECTS[i].img; });
+  }
 
   let current = 0;
   let playing = true;
@@ -154,6 +160,7 @@
     if (window.lockPageScroll) window.lockPageScroll();
     else document.body.style.overflow = 'hidden';
     if (card) card.focus({ preventScroll: true });
+    loadImgs();
     setPlaying(true);           // 每次打开都重新开始 2 秒自动轮播
     render(current, false);
     restartCycle();
@@ -202,18 +209,11 @@
     closeCard();
   }, { passive: true });
 
-  let lastY = null;
-  window.addEventListener('touchstart', function (e) {
-    lastY = e.touches[0] ? e.touches[0].clientY : null;
-  }, { passive: true });
-  window.addEventListener('touchmove', function (e) {
-    if (!isOpen() || lastY === null) return;
-    const t = e.touches[0];
-    if (!t) return;
-    const y = t.clientY;
-    if (y < lastY - 8) closeCard();
-    lastY = y;
-  }, { passive: true });
+  if (window.installCardTouch) window.installCardTouch({
+    isOpen: isOpen,
+    body: function () { return card ? card.querySelector('.ta-body') : null; },
+    close: closeCard
+  });
 
   // 语言切换时，用当前语言重渲染描述
   if (window.MutationObserver) {

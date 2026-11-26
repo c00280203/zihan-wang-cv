@@ -46,7 +46,7 @@ if (stage) {
   // 斜俯视角：地形铺满画面，山体起伏、河谷与地块厚度同时可见
   camera.position.set(0.45, 0.62, 0.62);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setSize(W(), H());
   renderer.setClearAlpha(0);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));

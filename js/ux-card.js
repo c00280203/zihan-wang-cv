@@ -87,14 +87,9 @@
     if (e.deltaY <= 2) return;
     closeCard();
   }, { passive: true });
-  let lastY = null;
-  window.addEventListener('touchstart', function (e) {
-    lastY = e.touches[0] ? e.touches[0].clientY : null;
-  }, { passive: true });
-  window.addEventListener('touchmove', function (e) {
-    if (!isOpen() || lastY === null) return;
-    const t = e.touches[0]; if (!t) return;
-    if (t.clientY < lastY - 8) closeCard();
-    lastY = t.clientY;
-  }, { passive: true });
+  if (window.installCardTouch) window.installCardTouch({
+    isOpen: isOpen,
+    body: function () { return card ? card.querySelector('.ta-body') : null; },
+    close: closeCard
+  });
 })();

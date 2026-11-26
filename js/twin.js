@@ -422,15 +422,8 @@ window.addEventListener('wheel', (e) => {
   closeCard(true);
 }, { passive: true });
 
-let lastTouchY = null;
-window.addEventListener('touchstart', (e) => {
-  lastTouchY = e.touches[0] ? e.touches[0].clientY : null;
-}, { passive: true });
-window.addEventListener('touchmove', (e) => {
-  if (!isOpen() || lastTouchY === null) return;
-  const t = e.touches[0];
-  if (!t) return;
-  const y = t.clientY;
-  if (y < lastTouchY - 8) closeCard(true);   // 手指向上滑 = 页面向下滚
-  lastTouchY = y;
-}, { passive: true });
+if (window.installCardTouch) window.installCardTouch({
+  isOpen: isOpen,
+  body: function () { return card ? card.querySelector('.twin-main') : null; },
+  close: function () { closeCard(true); }
+});

@@ -71,8 +71,10 @@
     else document.body.style.overflow = 'hidden';
     if (card) card.focus({ preventScroll: true });
     window.__oecUserMoved = false;      // 每次打开都恢复默认取景
-    if (window.oecusseResize) requestAnimationFrame(window.oecusseResize);
-    if (window.oecusseStartLoop) window.oecusseStartLoop();   // 唤醒渲染循环（内部置 active）
+    if (window.with3D) window.with3D('oec', function () {
+      if (window.oecusseResize) requestAnimationFrame(window.oecusseResize);
+      if (window.oecusseStartLoop) window.oecusseStartLoop();
+    });
     render(current, false);
   }
   function closeCard() {
@@ -133,13 +135,25 @@
   }, { passive: false, capture: true });
   let lastY = null;
   window.addEventListener('touchstart', function (e) { lastY = e.touches[0] ? e.touches[0].clientY : null; }, { passive: true });
+  /* 手机端手动接管：手指上滑=向下看正文；正文到底后继续上滑才关闭。
+     依赖浏览器默认滚动不可靠（全局锁/3D 画布都会吃掉默认行为）。 */
   window.addEventListener('touchmove', function (e) {
-    if (!isOpen() || lastY === null) return;
+    if (!isOpen() || lastY === null || overlay.classList.contains('retracting')) return;
     const t = e.touches[0]; if (!t) return;
     if (t.target && t.target.closest && t.target.closest('#oec-stage, #oec-rain')) { lastY = t.clientY; return; }
-    if (t.clientY < lastY - 8 && !canScrollMore()) closeCard();
+    const dy = t.clientY - lastY;
+    if (dy < -2) {
+      // 手指上滑：先看下面的信息，已到底才关闭
+      e.preventDefault();
+      if (canScrollMore()) bodyEl.scrollTop = Math.min(bodyEl.scrollTop + (-dy), bodyEl.scrollHeight - bodyEl.clientHeight);
+      else closeCard();
+    } else if (dy > 2 && bodyEl.scrollTop > 0) {
+      // 手指下滑：回到上面的信息
+      e.preventDefault();
+      bodyEl.scrollTop = Math.max(bodyEl.scrollTop - dy, 0);
+    }
     lastY = t.clientY;
-  }, { passive: true });
+  }, { passive: false });
 
   if (window.MutationObserver) {
     let last = document.body.className;

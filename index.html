@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#7FA98D" media="(prefers-color-scheme: light)">
 <title>Zihan Wang — Interactive CV</title>
 <meta name="description" content="Zihan Wang (王子涵) — MSc Artificial Intelligence, XJTLU. A minimal, scroll-driven interactive CV.">
-<link rel="stylesheet" href="css/3d.css?v=closeglassoffv20261126">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/3d.css?v=mobilefixv20261126">
 </head>
 <body class="lang-en">
 
@@ -79,12 +81,12 @@
         <div class="nameplate plate-back">
           <div class="back-media">
             <div class="back-glow" aria-hidden="true"></div>
-            <video id="badge-video" autoplay muted loop playsinline
-                   poster="assets/portrait/portrait-me.png"
+            <video id="badge-video" muted loop playsinline preload="none"
+                   poster="assets/portrait/portrait-me.webp"
                    aria-label="Digital portrait of Zihan Wang">
               <source src="assets/portrait/Continuous_natural_micro_movem_2026-11-24T09-48-04.mp4" type="video/mp4">
             </video>
-            <img class="portrait-fallback" src="assets/portrait/portrait-me.png" alt="Zihan Wang">
+            <img class="portrait-fallback" src="assets/portrait/portrait-me.webp" alt="Zihan Wang">
             <button class="hotspot hs-1" type="button" data-key="identity" aria-label="Identity">01</button>
             <button class="hotspot hs-2" type="button" data-key="focus" aria-label="Focus">02</button>
             <button class="hotspot hs-3" type="button" data-key="base" aria-label="Base">03</button>
@@ -127,8 +129,8 @@
           <p><span class="en">中文 · English · Deutsch (A2)</span><span class="zh">中文 · 英语 · 德语（A2）</span></p>
         </div>
         <p class="links">
-          <a href="assets/CV.pdf" target="_blank" rel="noopener"><span class="en">CV PDF ↗</span><span class="zh">简历 PDF ↗</span></a>
-          <a href="https://github.com/c00280203" target="_blank" rel="noopener">GITHUB ↗</a>
+          <a href="assets/CV.pdf" target="_blank" rel="noopener"><span class="en">CV PDF ↗︎</span><span class="zh">简历 PDF ↗︎</span></a>
+          <a href="https://github.com/c00280203" target="_blank" rel="noopener">GITHUB ↗︎</a>
         </p>
       </div>
 
@@ -187,7 +189,7 @@
               <span class="to-bracket" aria-hidden="true">[</span>
               <span class="to-dot" aria-hidden="true"></span>
               <span class="en">EXPLORE THE 3D MODEL</span><span class="zh">探索 3D 模型</span>
-              <span class="to-arrow" aria-hidden="true">↗</span>
+              <span class="to-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
               <span class="to-bracket" aria-hidden="true">]</span>
             </button>
           </div>
@@ -202,7 +204,7 @@
               <span class="to-bracket" aria-hidden="true">[</span>
               <span class="to-dot" aria-hidden="true"></span>
               <span class="en">VIEW MENTORSHIP WORK</span><span class="zh">查看辅导作品</span>
-              <span class="to-arrow" aria-hidden="true">↗</span>
+              <span class="to-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
               <span class="to-bracket" aria-hidden="true">]</span>
             </button>
           </div>
@@ -217,7 +219,7 @@
               <span class="to-bracket" aria-hidden="true">[</span>
               <span class="to-dot" aria-hidden="true"></span>
               <span class="en">VIEW TENDER MODEL</span><span class="zh">查看报价模型</span>
-              <span class="to-arrow" aria-hidden="true">↗</span>
+              <span class="to-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
               <span class="to-bracket" aria-hidden="true">]</span>
             </button>
           </div>
@@ -232,7 +234,7 @@
               <span class="to-bracket" aria-hidden="true">[</span>
               <span class="to-dot" aria-hidden="true"></span>
               <span class="en">EXPLORE THE FLOOD MODEL</span><span class="zh">查看洪水模拟</span>
-              <span class="to-arrow" aria-hidden="true">↗</span>
+              <span class="to-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
               <span class="to-bracket" aria-hidden="true">]</span>
             </button>
           </div>
@@ -246,7 +248,7 @@
             <button class="twin-open" id="rtu-open" type="button" aria-haspopup="dialog">
               <span class="to-bracket" aria-hidden="true">[</span><span class="to-dot" aria-hidden="true"></span>
               <span class="en">EXPLORE THE RTU BOARD</span><span class="zh">查看 RTU 电路板</span>
-              <span class="to-arrow" aria-hidden="true">↗</span><span class="to-bracket" aria-hidden="true">]</span>
+              <span class="to-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span><span class="to-bracket" aria-hidden="true">]</span>
             </button>
           </div>
         </article>
@@ -259,7 +261,7 @@
             <button class="twin-open" id="drone-open" type="button" aria-haspopup="dialog">
               <span class="to-bracket" aria-hidden="true">[</span><span class="to-dot" aria-hidden="true"></span>
               <span class="en">EXPLORE INFRARED INSPECTION</span><span class="zh">查看红外巡检成果</span>
-              <span class="to-arrow" aria-hidden="true">↗</span><span class="to-bracket" aria-hidden="true">]</span>
+              <span class="to-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span><span class="to-bracket" aria-hidden="true">]</span>
             </button>
           </div>
         </article>
@@ -272,7 +274,7 @@
             <button class="twin-open" id="ux-open" type="button" aria-haspopup="dialog">
               <span class="to-bracket" aria-hidden="true">[</span><span class="to-dot" aria-hidden="true"></span>
               <span class="en">EXPLORE THE INTERACTIONS</span><span class="zh">查看交互设计成果</span>
-              <span class="to-arrow" aria-hidden="true">↗</span><span class="to-bracket" aria-hidden="true">]</span>
+              <span class="to-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span><span class="to-bracket" aria-hidden="true">]</span>
             </button>
           </div>
         </article>
@@ -285,7 +287,7 @@
             <button class="twin-open" id="stepper-open" type="button" aria-haspopup="dialog">
               <span class="to-bracket" aria-hidden="true">[</span><span class="to-dot" aria-hidden="true"></span>
               <span class="en">EXPLORE THE MOTOR</span><span class="zh">查看电机结构</span>
-              <span class="to-arrow" aria-hidden="true">↗</span><span class="to-bracket" aria-hidden="true">]</span>
+              <span class="to-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span><span class="to-bracket" aria-hidden="true">]</span>
             </button>
           </div>
         </article>
@@ -303,7 +305,7 @@
           <div class="skill-tile-top">
             <span class="skill-index">01</span>
             <h3><span class="en">CODE</span><span class="zh">编程</span></h3>
-            <span class="skill-mark">⌘</span>
+            <span class="skill-mark"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12"/></svg></span>
           </div>
           <div class="skill-chips">
             <span class="chip">Python</span><span class="chip">Java</span><span class="chip">C++</span>
@@ -317,7 +319,7 @@
           <div class="skill-tile-top">
             <span class="skill-index">02</span>
             <h3><span class="en">AI / ML</span><span class="zh">人工智能</span></h3>
-            <span class="skill-mark">✳</span>
+            <span class="skill-mark"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M4.93 4.93l14.14 14.14M2 12h20M4.93 19.07 19.07 4.93"/></svg></span>
           </div>
           <div class="skill-chips">
             <span class="chip"><span class="en">Machine learning</span><span class="zh">机器学习</span></span>
@@ -334,7 +336,7 @@
           <div class="skill-tile-top">
             <span class="skill-index">03</span>
             <h3><span class="en">COMMUNITY</span><span class="zh">社区</span></h3>
-            <span class="skill-mark">↗</span>
+            <span class="skill-mark"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
           </div>
           <div class="skill-chips">
             <span class="chip"><span class="en">SETU student liaison</span><span class="zh">SETU 学生联络人</span></span>
@@ -399,22 +401,22 @@
         <a class="contact-row" href="mailto:zihan.wang2604@student.xjtlu.edu.cn">
           <span class="contact-name"><span class="en">UNIVERSITY EMAIL</span><span class="zh">学校邮箱</span></span>
           <span class="contact-value">zihan.wang2604@student.xjtlu.edu.cn</span>
-          <span class="contact-arrow">↗</span>
+          <span class="contact-arrow"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
         </a>
         <a class="contact-row" href="mailto:zhw001128@gmail.com">
           <span class="contact-name"><span class="en">PERSONAL EMAIL</span><span class="zh">个人邮箱</span></span>
           <span class="contact-value">zhw001128@gmail.com</span>
-          <span class="contact-arrow">↗</span>
+          <span class="contact-arrow"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
         </a>
         <a class="contact-row" href="tel:+8618573996621">
           <span class="contact-name"><span class="en">PHONE</span><span class="zh">电话</span></span>
           <span class="contact-value">+86 185 7399 6621</span>
-          <span class="contact-arrow">↗</span>
+          <span class="contact-arrow"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
         </a>
         <a class="contact-row" href="https://github.com/c00280203" target="_blank" rel="noopener">
           <span class="contact-name"><span class="en">GITHUB</span><span class="zh">代码仓库</span></span>
           <span class="contact-value">github.com/c00280203</span>
-          <span class="contact-arrow">↗</span>
+          <span class="contact-arrow"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
         </a>
       </div>
       <p class="copy-tip" id="copy-tip" aria-live="polite"></p>
@@ -603,8 +605,8 @@
     <div class="ta-body drone-body">
       <div class="ta-stage">
         <div class="ta-shot drone-shot" id="drone-shot">
-          <img class="show" data-view="visible" src="assets/drone/visible-render.webp?v=drone17v20261126" alt="Visible-light dam photo — seepage invisible" loading="lazy">
-          <img data-view="thermal" src="assets/drone/thermal-render.webp?v=drone17v20261126" alt="Thermal image — cooler seepage band revealed" loading="lazy">
+          <img class="show" data-view="visible" data-src="assets/drone/visible-render.webp?v=drone17v20261126" alt="Visible-light dam photo — seepage invisible" loading="lazy">
+          <img data-view="thermal" data-src="assets/drone/thermal-render.webp?v=drone17v20261126" alt="Thermal image — cooler seepage band revealed" loading="lazy">
           <img data-view="user" id="drone-user-img" alt="Your uploaded image" hidden>
           <div class="drone-probe" id="drone-probe" aria-hidden="true"><i class="drone-probe-cross"></i><span class="drone-probe-val" id="drone-probe-val"></span></div>
         </div>
@@ -768,19 +770,25 @@
   }
 }
 </script>
-<script src="js/3d.js?v=procfixv20261126"></script>
-<script type="module" src="js/twin.js?v=procfixv20261126"></script>
-<script src="js/ta.js?v=zoomfixv20261126"></script>
-<script src="js/bid.js?v=vectorv20261126"></script>
-<script src="js/oec-card.js?v=scrollfix2v20261126"></script>
-<script type="module" src="js/oecusse.js?v=lazyv20261126"></script>
-<script src="js/rtu-card.js?v=procfixv20261126"></script>
-<script type="module" src="js/rtu.js?v=lazyv20261126"></script>
+<script src="js/3d.js?v=mobilefixv20261126"></script>
+<script type="module" src="js/twin.js?v=mobilefixv20261126"></script>
+<script src="js/ta.js?v=mobilefixv20261126"></script>
+<script src="js/bid.js?v=mobilefixv20261126"></script>
+<script src="js/oec-card.js?v=mobilefixv20261126"></script>
+<script src="js/rtu-card.js?v=mobilefixv20261126"></script>
 <script src="js/drone-temps.js?v=drone11v20261125"></script>
-<script src="js/drone-card.js?v=autoplayv20261126"></script>
-<script src="js/ux-card.js?v=uxonecorev20261126"></script>
-<script src="js/stepper-card.js?v=procfixv20261126"></script>
-<script type="module" src="js/stepper.js?v=rafstopv20261126"></script>
-<script src="js/ai-twin.js?v=procfixv20261126"></script>
+<script src="js/drone-card.js?v=mobilefixv20261126"></script>
+<script src="js/ux-card.js?v=mobilefixv20261126"></script>
+<script src="js/stepper-card.js?v=mobilefixv20261126"></script>
+<script src="js/ai-twin.js?v=mobilefixv20261126"></script>
+<script type="module" src="js/lazy3d.js?v=mobilefixv20261126"></script>
+<script>
+/* 手机端流畅访问：同一套页面的离线缓存，不另做简版。 */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(function () {});
+  });
+}
+</script>
 </body>
 </html>

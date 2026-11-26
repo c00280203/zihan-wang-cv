@@ -30,11 +30,13 @@
     else document.body.style.overflow = 'hidden';
     if (card) card.focus({ preventScroll: true });
     window.__rtuUserMoved = false;
-    if (window.rtuReset) window.rtuReset();
     lastAssembled = false;
     setCue(false);
-    if (window.rtuResize) requestAnimationFrame(window.rtuResize);
-    if (window.rtuStartLoop) window.rtuStartLoop();   // 唤醒渲染循环（内部会置 rtuActive=true）
+    if (window.with3D) window.with3D('rtu', function () {
+      if (window.rtuReset) window.rtuReset();
+      if (window.rtuResize) requestAnimationFrame(window.rtuResize);
+      if (window.rtuStartLoop) window.rtuStartLoop();
+    });
     startCueWatch();
   }
   function closeCard() {
@@ -91,13 +93,10 @@
     if (canScrollMore()) return;   // 正文没到底，先让它滚
     closeCard();
   }, { passive: true });
-  let lastY = null;
-  window.addEventListener('touchstart', function (e) { lastY = e.touches[0] ? e.touches[0].clientY : null; }, { passive: true });
-  window.addEventListener('touchmove', function (e) {
-    if (!isOpen() || lastY === null) return;
-    const t = e.touches[0]; if (!t) return;
-    if (t.target && t.target.closest && t.target.closest('#rtu-stage')) { lastY = t.clientY; return; }
-    if (t.clientY < lastY - 8 && !canScrollMore()) closeCard();
-    lastY = t.clientY;
-  }, { passive: true });
+  if (window.installCardTouch) window.installCardTouch({
+    isOpen: isOpen,
+    body: function () { return bodyEl; },
+    skip: '#rtu-stage',
+    close: closeCard
+  });
 })();

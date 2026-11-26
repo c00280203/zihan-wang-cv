@@ -45,7 +45,7 @@ if (stage) {
     camera.position.set(...h.p);
   }
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearAlpha(0);
   renderer.setSize(W(), H());
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));

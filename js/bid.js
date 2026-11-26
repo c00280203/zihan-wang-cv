@@ -309,18 +309,11 @@
     closeCard();
   }, { passive: true });
 
-  let lastY = null;
-  window.addEventListener('touchstart', function (e) {
-    lastY = e.touches[0] ? e.touches[0].clientY : null;
-  }, { passive: true });
-  window.addEventListener('touchmove', function (e) {
-    if (!isOpen() || lastY === null) return;
-    const t = e.touches[0];
-    if (!t) return;
-    const y = t.clientY;
-    if (y < lastY - 8) closeCard();
-    lastY = y;
-  }, { passive: true });
+  if (window.installCardTouch) window.installCardTouch({
+    isOpen: isOpen,
+    body: function () { return card ? card.querySelector('.ta-body') : null; },
+    close: closeCard
+  });
 
   if (window.MutationObserver) {
     let lastLang = document.body.className;

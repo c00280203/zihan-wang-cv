@@ -55,10 +55,23 @@
     zh: '这个我目前也不是很清楚。',
     en: 'I\'m not entirely sure about that one.'
   };
+  /* 同一问题不逐字重复：轮换轻微开头，事实与口径不变。 */
+  const variantCursor = {};
+  const LEADS = {
+    zh: ['', '简单说，', '嗯，'],
+    en: ['', 'Simply put, ', 'Well, ']
+  };
   function fallbackAnswer(q, zh) {
     const list = FALLBACK[zh ? 'zh' : 'en'];
     const hit = list.find(x => x.k.test(q));
-    return hit ? hit.a : (zh ? FALLBACK_GENERIC.zh : FALLBACK_GENERIC.en);
+    const key = hit ? String(hit.k) : 'generic';
+    const n = variantCursor[key] || 0;
+    variantCursor[key] = n + 1;
+    const lead = LEADS[zh ? 'zh' : 'en'][n % 3];
+    const base = hit
+      ? (Array.isArray(hit.a) ? hit.a[n % hit.a.length] : hit.a)
+      : (zh ? FALLBACK_GENERIC.zh : FALLBACK_GENERIC.en);
+    return lead + base;
   }
   function fallbackNote(err, zh) {
     const m = String(err && err.message || err || '');

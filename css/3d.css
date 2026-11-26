@@ -31,6 +31,7 @@ html.scroll-locked, body.scroll-locked{ overflow:hidden; overscroll-behavior:non
 *,*::before,*::after{ box-sizing:border-box; }
 
 html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; overflow-x:clip; }
+button, .twin-open{ touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
 section[id],div[id]{ scroll-margin-top:78px; }
 
 body{
@@ -625,6 +626,11 @@ body::before{
   font-family:var(--mono); font-size:11px; letter-spacing:.18em; font-weight:600;
 }
 .skill-mark{ margin-left:auto; font-size:15px; color:#7FA98D; line-height:1; }
+/* 用内联 SVG 代替 Unicode 箭头/星号，避免 iOS 把它们当 emoji 渲染成蓝绿方块 */
+.ico{ display:block; width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.to-arrow .ico{ width:11px; height:11px; }
+.contact-arrow .ico{ width:15px; height:15px; }
+.twin-close, .ta-close{ user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
 .skill-chips{ display:flex; flex-wrap:wrap; gap:8px 18px; }
 .chip{
   display:inline-flex; align-items:center;
@@ -674,6 +680,7 @@ body::before{
   padding:22px 24px 40px; border-top:1px solid var(--line);
   display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
   font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; color:var(--muted);
+  user-select:none; -webkit-user-select:none; -webkit-touch-callout:none;
 }
 
 /* ---------------- 逐段入场 ---------------- */

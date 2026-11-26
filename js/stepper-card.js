@@ -33,11 +33,13 @@
     if (window.lockPageScroll) window.lockPageScroll();
     else document.body.style.overflow = 'hidden';
     if (card) card.focus({ preventScroll: true });
-    if (window.stepperReset) window.stepperReset();
     lastAssembled = false;
     setCue(false);
-    if (window.stepperResize) requestAnimationFrame(window.stepperResize);
-    if (window.stepperStartLoop) window.stepperStartLoop();   // 唤醒渲染循环
+    if (window.with3D) window.with3D('stepper', function () {
+      if (window.stepperReset) window.stepperReset();
+      if (window.stepperResize) requestAnimationFrame(window.stepperResize);
+      if (window.stepperStartLoop) window.stepperStartLoop();
+    });
     startCueWatch();
   }
   function closeCard() {
@@ -90,13 +92,10 @@
     if (canScrollMore()) return;
     closeCard();
   }, { passive: true });
-  let lastY = null;
-  window.addEventListener('touchstart', function (e) { lastY = e.touches[0] ? e.touches[0].clientY : null; }, { passive: true });
-  window.addEventListener('touchmove', function (e) {
-    if (!isOpen() || lastY === null) return;
-    const t = e.touches[0]; if (!t) return;
-    if (t.target && t.target.closest && t.target.closest('#stepper-stage')) { lastY = t.clientY; return; }
-    if (t.clientY < lastY - 8 && !canScrollMore()) closeCard();
-    lastY = t.clientY;
-  }, { passive: true });
+  if (window.installCardTouch) window.installCardTouch({
+    isOpen: isOpen,
+    body: function () { return bodyEl; },
+    skip: '#stepper-stage',
+    close: closeCard
+  });
 })();

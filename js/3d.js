@@ -16,7 +16,14 @@ document.body.classList.add('js');
    关闭时用 scrollTo 瞬间还原到打开那一刻，无动画、无回弹。 */
 window.__scrollLockCount = 0;
 window.__scrollLockY = 0;
-function blockScroll(e) { if (window.__scrollLockCount > 0) e.preventDefault(); }
+function blockScroll(e) {
+  if (window.__scrollLockCount <= 0) return;
+  /* 卡片打开时只锁背景页面；弹层内部正文/3D 舞台必须放行，
+     否则手机上整张卡既滚不到底，也无法通过滑动操作 3D。 */
+  const t = e.target;
+  if (t && t.closest && t.closest('.ta-body, .twin-main, .oec-body, .rtu-body, .stepper-body, #rtu-stage, #stepper-stage, #oec-stage, #oec-rain, #twin-view, .ai-twin-chat')) return;
+  e.preventDefault();
+}
 window.addEventListener('wheel', blockScroll, { passive: false, capture: true });
 window.addEventListener('touchmove', blockScroll, { passive: false, capture: true });
 
@@ -32,6 +39,37 @@ window.unlockPageScroll = function () {
   document.documentElement.classList.remove('scroll-locked');
   document.body.classList.remove('scroll-locked');
   window.scrollTo({ top: window.__scrollLockY, behavior: 'auto' });
+};
+
+/* 统一的卡片触摸规则：手指上滑先看正文，滚到底后再上滑才关闭；
+   手指下滑优先回滚正文。3D 舞台可通过 skip 选择器交给场景自己处理。 */
+window.installCardTouch = function (opts) {
+  const isOpen = opts.isOpen;
+  const getBody = opts.body;
+  const close = opts.close;
+  const skip = opts.skip || null;
+  let lastY = null;
+  window.addEventListener('touchstart', function (e) {
+    lastY = isOpen() && e.touches[0] ? e.touches[0].clientY : null;
+  }, { passive: true });
+  window.addEventListener('touchmove', function (e) {
+    if (!isOpen() || lastY === null) return;
+    const t = e.touches[0]; if (!t) return;
+    if (skip && t.target && t.target.closest && t.target.closest(skip)) { lastY = t.clientY; return; }
+    const dy = t.clientY - lastY;
+    if (Math.abs(dy) < 2) { lastY = t.clientY; return; }
+    const bodyEl = typeof getBody === 'function' ? getBody() : getBody;
+    const max = bodyEl ? bodyEl.scrollHeight - bodyEl.clientHeight : 0;
+    const more = max > 2;
+    e.preventDefault();
+    if (dy < 0) {
+      if (more && bodyEl.scrollTop < max - 2) bodyEl.scrollTop = Math.min(bodyEl.scrollTop - dy, max);
+      else close();
+    } else if (bodyEl && bodyEl.scrollTop > 0) {
+      bodyEl.scrollTop = Math.max(bodyEl.scrollTop - dy, 0);
+    }
+    lastY = t.clientY;
+  }, { passive: false });
 };
 
 const body = document.body;
@@ -188,17 +226,26 @@ if (portraitStage && portraitFrame) {
   });
 }
 
-/* ---------------- 视频回退 ---------------- */
+/* ---------------- 视频回退 ----------------
+   先显示同一张肖像 WebP 静态图，视频等主线程空闲后再加载；
+   首次打开不再为 1MB 视频等待，画质和最终画面都不变。 */
 [portraitVideo, badgeVideo].forEach((video, i) => {
   if (!video) return;
-  video.play().catch(() => {});
   const target = i === 0 ? portraitFrame : backMedia;
   const fallback = () => target && target.classList.add('is-fallback');
   video.addEventListener('error', fallback);
   const source = video.querySelector('source');
   if (source) source.addEventListener('error', fallback);
-  setTimeout(() => { if (video.readyState < 2) fallback(); }, 4000);
+  setTimeout(() => { if (video.readyState < 2 && video.dataset.armed) fallback(); }, 6000);
 });
+function armVideos() {
+  [portraitVideo, badgeVideo].forEach((video) => {
+    if (!video || video.dataset.armed) return;
+    video.dataset.armed = '1';
+    video.play().catch(() => {});
+  });
+}
+setTimeout(armVideos, 2500);
 
 /* ---------------- 后台媒体：卡片打开时暂停，关闭后恢复 ----------------
    手机端视频解码是持续负载；卡片遮罩把画面盖住时继续播没有意义。
@@ -209,7 +256,7 @@ function syncBackdropVideos() {
     (el) => el.getAttribute('aria-hidden') === 'false'
   );
   [portraitVideo, badgeVideo].forEach((video) => {
-    if (!video) return;
+    if (!video || video.dataset.armed !== '1') return;
     if (document.hidden || anyCardOpen) {
       if (!video.paused) video.pause();
     } else if (video.paused) {

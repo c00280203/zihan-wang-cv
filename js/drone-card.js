@@ -156,6 +156,7 @@
     if (window.lockPageScroll) window.lockPageScroll();
     else document.body.style.overflow = 'hidden';
     if (card) card.focus({ preventScroll: true });
+    imgs.forEach(function (im) { if (im.dataset.src && !im.src) im.src = im.dataset.src; });
     setPlaying(true);
     render(0, false);
     restartCycle();
@@ -202,14 +203,11 @@
     if (e.deltaY <= 2) return;
     closeCard();
   }, { passive: true });
-  let lastY = null;
-  window.addEventListener('touchstart', function (e) { lastY = e.touches[0] ? e.touches[0].clientY : null; }, { passive: true });
-  window.addEventListener('touchmove', function (e) {
-    if (!isOpen() || lastY === null) return;
-    const t = e.touches[0]; if (!t) return;
-    if (t.clientY < lastY - 8) closeCard();
-    lastY = t.clientY;
-  }, { passive: true });
+  if (window.installCardTouch) window.installCardTouch({
+    isOpen: isOpen,
+    body: function () { return card ? card.querySelector('.ta-body') : null; },
+    close: closeCard
+  });
 
   /* ---------- GPS → 四个地图（无手填） ---------- */
   const readout = document.getElementById('drone-readout');
