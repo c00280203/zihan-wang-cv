@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FAFAF7">
+<title>Zihan Wang — 3D Resume</title>
+<meta name="description" content="Zihan Wang (王子涵) — MSc Artificial Intelligence, XJTLU. An interactive 3D resume: rotate the figure, tap the stickers.">
+<link rel="stylesheet" href="css/3d.css">
+</head>
+<body class="lang-en">
+
+<header class="top">
+  <a class="brand" href="#top">Zihan Wang</a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#work"><span class="en">Work</span><span class="zh">经历</span></a>
+    <a href="#education"><span class="en">Education</span><span class="zh">教育</span></a>
+    <a href="#skills"><span class="en">Skills</span><span class="zh">技能</span></a>
+    <a href="#contact"><span class="en">Contact</span><span class="zh">联系</span></a>
+  </nav>
+  <div class="tools">
+    <a class="quiet" href="index.html"><span class="en">Classic</span><span class="zh">经典版</span></a>
+    <button id="lang-toggle" class="quiet" type="button" aria-label="Switch language">
+      <span class="en">中文</span><span class="zh">EN</span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======================= HERO ======================= -->
+  <section class="hero">
+    <div class="stage-wrap">
+    <div class="stage" id="stage">
+      <canvas id="avatar-canvas" aria-label="Interactive 3D figure of Zihan Wang"></canvas>
+
+      <div class="stage-fallback" id="stage-fallback" hidden>
+        <img src="assets/photo.jpg" alt="Zihan Wang">
+      </div>
+
+      <div class="labels" id="labels"></div>
+
+      <div class="tag-panel" id="tag-panel" hidden>
+        <button class="panel-close" id="panel-close" type="button" aria-label="Close">×</button>
+        <h3 id="panel-title"></h3>
+        <p id="panel-body"></p>
+        <a id="panel-link" class="panel-link" href="#work">
+          <span class="en">Details</span><span class="zh">查看详情</span>
+        </a>
+      </div>
+    </div>
+      <div class="stage-foot">
+        <p class="hint">
+          <span class="en">Drag to rotate · tap a sticker</span>
+          <span class="zh">拖动旋转 · 点击贴纸</span>
+        </p>
+        <button id="mode-toggle" class="hint-btn" type="button" aria-pressed="false">
+          <span class="en">Clay</span><span class="zh">石膏</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="intro">
+      <p class="eyebrow">MSc Artificial Intelligence · XJTLU</p>
+      <h1>Zihan<br>Wang</h1>
+      <p class="cn">王子涵</p>
+
+      <p class="lede">
+        <span class="en">I build systems that see and decide — infrared dam inspection, tendering-strategy models, edge vision. Currently teaching three courses and studying AI in Suzhou.</span>
+        <span class="zh">我做「能看、能判断」的系统：大坝红外巡检、招投标报价模型、边缘视觉。现在在苏州读人工智能，同时给三门课当助教。</span>
+      </p>
+
+      <ul class="facts">
+        <li><span class="en">Suzhou, China</span><span class="zh">中国 · 苏州</span></li>
+        <li><span class="en">Open to 2027 roles</span><span class="zh">寻找 2027 届机会</span></li>
+        <li><span class="en">EN · 中文 · DE</span><span class="zh">中 · 英 · 德</span></li>
+      </ul>
+
+      <p class="links">
+        <a href="assets/CV.pdf" target="_blank" rel="noopener"><span class="en">CV (PDF)</span><span class="zh">简历 PDF</span></a>
+        <a href="mailto:zihan.wang2604@student.xjtlu.edu.cn"><span class="en">Email</span><span class="zh">邮箱</span></a>
+        <a href="https://github.com/c00280203" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================= WORK ======================= -->
+  <section class="sec" id="work">
+    <div class="sec-head">
+      <span class="num">01</span>
+      <h2><span class="en">Work</span><span class="zh">工作经历</span></h2>
+      <span class="sec-note"><span class="en">7 roles · 2023 → now</span><span class="zh">7 段 · 2023 至今</span></span>
+    </div>
+
+    <div class="rows">
+      <article class="row">
+        <div class="when">Sep 2026 — Dec 2026</div>
+        <div class="what">
+          <h3><span class="en">Teaching Assistant</span><span class="zh">课程助教</span></h3>
+          <p class="org"><span class="en">Xi'an Jiaotong-Liverpool University · Suzhou</span><span class="zh">西交利物浦大学 · 苏州</span></p>
+          <p><span class="en">TA for Mathematics for AI &amp; Data Science, Networking &amp; Distributed Computing, and Technology Fundamentals for the AI &amp; Big Data Industry.</span><span class="zh">担任《人工智能与数据科学数学》《网络与分布式计算》《人工智能与大数据产业技术基础与展望》三门课助教。</span></p>
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="when">Jul 2026 — Sep 2026</div>
+        <div class="what">
+          <h3><span class="en">AI Algorithm Intern</span><span class="zh">AI 算法实习生</span></h3>
+          <p class="org"><span class="en">Hunan Water Planning &amp; Design Institute · Internal Competition</span><span class="zh">湖南省水务规划设计院 · 集团内部算法大赛</span></p>
+          <p><span class="en">Regression model for the "Six-Random, Five-Interval" tendering system — predicting weight and bid-fluctuation coefficients, then using mean reversion to find the highest-scoring quote. Plus a Trae-based agent scraping tender data in real time and a DeepSeek layer scoring company-project fit.</span><span class="zh">为湖南「六随机五区间」机器管招投标系统构建回归模型，预测权重与随机下浮系数，用均值回归推算最高分报价；并用 Trae 开发 Agent 实时抓取招标数据、接入 DeepSeek 分析项目匹配度。</span></p>
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="when">Jun 2026</div>
+        <div class="what">
+          <h3><span class="en">Simultaneous Interpreter</span><span class="zh">同声传译 / 技术翻译</span></h3>
+          <p class="org"><span class="en">Hunan Water Planning &amp; Design Institute · Timor-Leste reservoir project</span><span class="zh">湖南省水务规划设计院 · 东帝汶水库项目</span></p>
+          <p><span class="en">Simultaneous interpretation for high-level negotiations and bidding meetings; translated critical technical documents.</span><span class="zh">为高层谈判与投标会议提供同声传译，精准翻译关键技术文档。</span></p>
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="when">Jun 2025 — Sep 2025</div>
+        <div class="what">
+          <h3><span class="en">Edge Computing R&amp;D Intern</span><span class="zh">边缘计算研发实习生</span></h3>
+          <p class="org"><span class="en">Hunan Water Planning &amp; Design Institute · Hunan</span><span class="zh">湖南省水务规划设计院 · 湖南</span></p>
+          <p><span class="en">Proposed migrating legacy RTU systems from MCUs to high-performance CPUs, then embedded a CV model that monitors dam water levels — verdicts go to the terminal server so staff keep the final call on the gates.</span><span class="zh">提出传统 RTU 从 MCU 升级到高性能 CPU 的架构方案，嵌入视觉模型实时监测水位，判断结果传至终端服务器，开闸决定权仍在人手里。</span></p>
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="when">Feb 2025 — Jun 2025</div>
+        <div class="what">
+          <h3><span class="en">AI + Drone Research Intern</span><span class="zh">AI + 无人机巡检研究实习生</span></h3>
+          <p class="org"><span class="en">Zhicheng Huishang Info Tech · Partner: Dam Safety Center</span><span class="zh">湖南智城慧商 · 合作单位：大坝安全中心</span></p>
+          <p><span class="en">Infrared inspection method: drone-borne thermal cameras read every pixel's temperature, so differential analysis finds seepage, cracks and piping invisible to the eye. Autonomous flight paths cut manual inspection cost.</span><span class="zh">提出红外巡检方法：机载热成像读取像素温度，用温差分析定位肉眼看不见的渗漏、裂缝与管涌；自主巡航路线降低人工巡检成本。</span></p>
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="when">Jun 2024 — Aug 2024</div>
+        <div class="what">
+          <h3><span class="en">Software Architecture &amp; UI Design Intern</span><span class="zh">软件架构与 UI 设计实习生</span></h3>
+          <p class="org"><span class="en">Zhongxiang Intelligent Construction · Middle Platform</span><span class="zh">中湘智能建造 · 中台部门</span></p>
+          <p><span class="en">Designed scalable architectures that stopped business lines from reinventing the wheel; owned UI/UX for internal systems.</span><span class="zh">设计中台架构，消除业务线重复开发；负责内部系统 UI/UX。</span></p>
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="when">Jun 2023 — Aug 2023</div>
+        <div class="what">
+          <h3><span class="en">Embedded Systems Intern</span><span class="zh">嵌入式系统实习生</span></h3>
+          <p class="org"><span class="en">Zhicheng Huishang Information Technology · Hunan</span><span class="zh">湖南智城慧商信息技术 · 湖南</span></p>
+          <p><span class="en">Hands-on STM32 work; developed and debugged stepper-motor control logic.</span><span class="zh">实操 STM32，开发并调试步进电机控制逻辑。</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ======================= EDUCATION ======================= -->
+  <section class="sec" id="education">
+    <div class="sec-head">
+      <span class="num">02</span>
+      <h2><span class="en">Education</span><span class="zh">教育背景</span></h2>
+    </div>
+
+    <div class="rows">
+      <article class="row">
+        <div class="when">2026 — now</div>
+        <div class="what">
+          <h3><span class="en">Xi'an Jiaotong-Liverpool University</span><span class="zh">西交利物浦大学</span></h3>
+          <p class="org"><span class="en">MSc Artificial Intelligence · Suzhou</span><span class="zh">人工智能 理学硕士 · 苏州</span></p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2022 — 2026</div>
+        <div class="what">
+          <h3><span class="en">South East Technological University</span><span class="zh">爱尔兰东南理工大学</span></h3>
+          <p class="org"><span class="en">BSc (Hons) Software Development · Ireland</span><span class="zh">软件开发 荣誉学士 · 爱尔兰</span></p>
+          <p><span class="en">Programming, algorithms &amp; data structures, AI, cloud development, software architecture.</span><span class="zh">编程、算法与数据结构、人工智能、云开发、软件架构。</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ======================= SKILLS ======================= -->
+  <section class="sec" id="skills">
+    <div class="sec-head">
+      <span class="num">03</span>
+      <h2><span class="en">Skills</span><span class="zh">技能</span></h2>
+    </div>
+
+    <div class="rows">
+      <article class="row">
+        <div class="when"><span class="en">Code</span><span class="zh">编程</span></div>
+        <div class="what">
+          <p><span class="en">Python, Java, C++, PyTorch, YOLO, OpenCV, DeepSeek API, Trae Agent, STM32, UI/UX.</span><span class="zh">Python、Java、C++、PyTorch、YOLO、OpenCV、DeepSeek API、Trae Agent、STM32、UI/UX。</span></p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when"><span class="en">Languages</span><span class="zh">语言</span></div>
+        <div class="what">
+          <p><span class="en">Chinese (native) · English (near-native, 5 years in Ireland) · German (A2)</span><span class="zh">中文（母语）· 英语（接近母语，在爱尔兰 5 年）· 德语（A2）</span></p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when"><span class="en">Also</span><span class="zh">其他</span></div>
+        <div class="what">
+          <p><span class="en">Public speaking, cross-cultural communication, technical documentation.</span><span class="zh">公众演讲、跨文化沟通、技术文档撰写。</span></p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2024 — 2026</div>
+        <div class="what">
+          <h3><span class="en">Chinese Student Community Liaison · SETU</span><span class="zh">中国学生社区官方联络人 · SETU</span></h3>
+          <p><span class="en">Appointed by the university; lead organizer of the International Day Chinese pavilion, 2025 &amp; 2026.</span><span class="zh">校方任命；连续两年担任国际日中国展台主组织者。</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ======================= CONTACT ======================= -->
+  <section class="sec contact" id="contact">
+    <div class="sec-head">
+      <span class="num">04</span>
+      <h2><span class="en">Contact</span><span class="zh">联系我</span></h2>
+    </div>
+    <div class="contact-grid">
+      <p class="contact-line">
+        <a href="mailto:zihan.wang2604@student.xjtlu.edu.cn">zihan.wang2604@student.xjtlu.edu.cn</a>
+      </p>
+      <p class="contact-line"><a href="mailto:zhw001128@gmail.com">zhw001128@gmail.com</a></p>
+      <p class="contact-line"><a href="tel:+8618573996621">+86 185 7399 6621</a></p>
+      <p class="contact-line"><a href="https://github.com/c00280203" target="_blank" rel="noopener">github.com/c00280203</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>© 2026 Zihan Wang</span>
+  <span class="foot-note">Three.js · model generated from a photo</span>
+</footer>
+
+<script type="importmap">
+{ "imports": { "three": "./js/vendor/three.module.min.js" } }
+</script>
+<script type="module" src="js/3d.js"></script>
+</body>
+</html>

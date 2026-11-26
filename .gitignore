@@ -1,0 +1,60 @@
+# macOS
+.DS_Store
+
+# 本地调试产物（截图 / 探针 / 浏览器配置）
+.shots/
+_probe.html
+_p3.html
+_p4.html
+
+# 3D 生成过程中的大体积原始文件，只保留压缩后的 avatar-opt.glb
+assets/avatar/avatar.glb
+assets/avatar/v2.glb
+assets/avatar/v3.glb
+assets/avatar/preview.png
+assets/avatar/v3-preview.png
+assets/avatar/work/
+
+node_modules/
+
+# 调试遗留的无扩展名随机临时文件（纯文本探针产物）
+# 注意：这个通配会命中同名的根目录，所以下面必须显式放行业务目录。
+/[0-9a-z_]*
+!/index.html
+!/resume.html
+!/3d.html
+!/assets/
+!/css/
+!/js/
+!/proxy-ai/
+
+# 本地备份与工作记录不进部署仓库
+.my_backup_flashy/
+.workbuddy/
+
+# 照片备份不上传
+assets/photo_original_backup.jpg
+
+# 未用于线上页面的素材草稿/源片：留在本地，但不进仓库与 Vercel 部署包
+assets/avatar/avatar-opt.glb
+assets/avatar/source*.jpg
+assets/portrait/turn-src/
+assets/portrait/turn-src2/
+assets/portrait/*.mp4
+!assets/portrait/Continuous_natural_micro_movem_2026-11-24T09-48-04.mp4
+assets/portrait/*.png
+!assets/portrait/portrait-me.png
+assets/bid/*.png
+assets/ta/v2_*.png
+!assets/ta/v2_student_home.png
+!assets/ta/v2_teacher_home.png
+assets/ta/kh_new_landing.png
+assets/ta/revision.png
+assets/ta/submitcheck.png
+assets/ta/chatstore.png
+assets/drone/visible.webp
+assets/drone/thermal.webp
+assets/drone/thermal-detail.webp
+assets/rtu/topcopper.webp
+assets/rtu/signal1.webp
+assets/rtu/signal2.webp

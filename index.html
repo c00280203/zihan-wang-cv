@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Zihan Wang — Interactive CV</title>
+<meta name="description" content="Zihan Wang (王子涵) — MSc Artificial Intelligence, XJTLU. A minimal, scroll-driven interactive CV.">
+<link rel="stylesheet" href="css/3d.css?v=procfixv20261126">
+</head>
+<body class="lang-en">
+
+<div class="ambient" aria-hidden="true">
+  <span class="glow glow-1"></span>
+  <span class="glow glow-2"></span>
+  <span class="glow glow-3"></span>
+  <span class="glow glow-4"></span>
+</div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="top">
+  <a class="brand" href="#top">ZW<span>.</span></a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#intro" class="active"><span class="en">INTRO</span><span class="zh">开场</span></a>
+    <a href="#about"><span class="en">ABOUT</span><span class="zh">关于</span></a>
+    <a href="#education"><span class="en">EDUCATION</span><span class="zh">教育</span></a>
+    <a href="#work"><span class="en">PRACTICE</span><span class="zh">实践</span></a>
+    <a href="#skills"><span class="en">SKILLS</span><span class="zh">技能</span></a>
+    <a href="#ai-twin"><span class="en">ASK ME</span><span class="zh">问我</span></a>
+    <a href="#contact"><span class="en">CONTACT</span><span class="zh">联系</span></a>
+  </nav>
+  <div class="tools">
+    <a class="quiet" href="classic.html"><span class="en">CLASSIC</span><span class="zh">经典版</span></a>
+    <button id="lang-toggle" class="quiet" type="button" aria-label="Switch language">
+      <span class="en">中文</span><span class="zh">EN</span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ PAGE 01 / 竖版玻璃工位牌 ============ -->
+  <section class="page page-one" id="intro">
+    <div class="nameplate-wrap" id="nameplate">
+      <div class="plate-3d" id="plate-3d">
+
+        <!-- FRONT / 签名面 -->
+        <div class="nameplate plate-front">
+          <div class="plate-head">
+            <span><span class="en">CURRICULUM VITAE</span><span class="zh">个人简历</span></span>
+            <span>2026</span>
+          </div>
+
+          <div class="plate-core">
+            <h1 class="plate-name">Zihan<br>Wang</h1>
+            <p class="plate-cn">王 子 涵</p>
+            <p class="plate-role">
+              <span class="en">MSc Artificial Intelligence<br>Xi'an Jiaotong-Liverpool University</span>
+              <span class="zh">人工智能 理学硕士<br>西交利物浦大学</span>
+            </p>
+          </div>
+
+          <div class="plate-sign">
+            <span><span class="en">SIGNATURE</span><span class="zh">签名</span></span>
+            <strong>Zihan Wang</strong>
+          </div>
+
+          <div class="plate-rule"><i></i><i></i><i></i></div>
+
+          <div class="plate-foot">
+            <span><span class="en">SUZHOU · CHINA</span><span class="zh">中国 · 苏州</span></span>
+            <button class="flip-btn" id="flip-front" type="button" aria-label="Flip the badge">
+              <span class="en">FLIP ↻</span><span class="zh">翻转 ↻</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- BACK / 数字形象面 -->
+        <div class="nameplate plate-back">
+          <div class="back-media">
+            <div class="back-glow" aria-hidden="true"></div>
+            <video id="badge-video" autoplay muted loop playsinline
+                   poster="assets/portrait/portrait-me.png"
+                   aria-label="Digital portrait of Zihan Wang">
+              <source src="assets/portrait/Continuous_natural_micro_movem_2026-11-24T09-48-04.mp4" type="video/mp4">
+            </video>
+            <img class="portrait-fallback" src="assets/portrait/portrait-me.png" alt="Zihan Wang">
+            <button class="hotspot hs-1" type="button" data-key="identity" aria-label="Identity">01</button>
+            <button class="hotspot hs-2" type="button" data-key="focus" aria-label="Focus">02</button>
+            <button class="hotspot hs-3" type="button" data-key="base" aria-label="Base">03</button>
+            <div class="hotspot-card" id="hotspot-card" hidden>
+              <button class="hotspot-close" id="hotspot-close" type="button" aria-label="Close">×</button>
+              <h3 id="hotspot-title"></h3>
+              <p id="hotspot-body"></p>
+            </div>
+          </div>
+          <div class="back-meta">
+            <span class="back-label"><span class="en">DIGITAL ME / BACK SIDE</span><span class="zh">数字形象 / 背面</span></span>
+            <button class="flip-btn" id="flip-back" type="button" aria-label="Flip the badge back">↻</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="page-tag tag-one">00 / NAMEPLATE</p>
+  </section>
+
+  <!-- ============ PAGE 02 / 简介（唯一人像在工牌背面） ============ -->
+  <section class="page page-two" id="about">
+    <div class="page-two-inner">
+      <div class="intro-column">
+        <p class="eyebrow">01 / PROFILE</p>
+        <h2 class="intro-name">Zihan<br>Wang</h2>
+        <p class="intro-cn">王子涵</p>
+        <p class="lede">
+          <span class="en">I build systems that see and decide — infrared dam inspection, tendering-strategy models, edge vision. Currently teaching three courses and studying AI in Suzhou.</span>
+          <span class="zh">我做「能看、能判断」的系统：大坝红外巡检、招投标报价模型、边缘视觉。现在在苏州读人工智能，同时给三门课当助教。</span>
+        </p>
+        <div class="mini-grid">
+          <div><span class="en">BASE</span><span class="zh">坐标</span></div>
+          <p><span class="en">Suzhou, China</span><span class="zh">中国 · 苏州</span></p>
+          <div><span class="en">FOCUS</span><span class="zh">方向</span></div>
+          <p><span class="en">AI · Computer Vision · Edge Systems</span><span class="zh">人工智能 · 计算机视觉 · 边缘系统</span></p>
+          <div><span class="en">STATUS</span><span class="zh">状态</span></div>
+          <p><span class="en">Open to 2027 graduate roles</span><span class="zh">寻找 2027 届机会</span></p>
+          <div><span class="en">LANGUAGES</span><span class="zh">语言</span></div>
+          <p><span class="en">中文 · English · Deutsch (A2)</span><span class="zh">中文 · 英语 · 德语（A2）</span></p>
+        </div>
+        <p class="links">
+          <a href="assets/CV.pdf" target="_blank" rel="noopener"><span class="en">CV PDF ↗</span><span class="zh">简历 PDF ↗</span></a>
+          <a href="https://github.com/c00280203" target="_blank" rel="noopener">GITHUB ↗</a>
+        </p>
+      </div>
+
+    </div>
+    <p class="page-tag tag-two">01 / PROFILE</p>
+  </section>
+
+  <div class="editorial">
+
+    <!-- 2 / EDUCATION -->
+    <section class="block" id="education">
+      <div class="block-head">
+        <span class="num">2 /</span>
+        <h2><span class="en">EDUCATION</span><span class="zh">教育背景</span></h2>
+      </div>
+      <div class="block-grid two-col">
+        <div class="grid-label"><span class="en">FIELD</span><span class="zh">专业</span></div>
+        <div class="grid-value"><span class="en">Artificial Intelligence</span><span class="zh">人工智能</span></div>
+        <div class="grid-label"><span class="en">BASE</span><span class="zh">地点</span></div>
+        <div class="grid-value"><span class="en">Suzhou, China</span><span class="zh">中国 · 苏州</span></div>
+      </div>
+      <div class="rows">
+        <article class="row">
+          <div class="when">2026 — NOW</div>
+          <div class="what">
+            <h3><span class="en">Xi'an Jiaotong-Liverpool University</span><span class="zh">西交利物浦大学</span></h3>
+            <p class="org"><span class="en">MSc Artificial Intelligence</span><span class="zh">人工智能 理学硕士</span></p>
+          </div>
+        </article>
+        <article class="row">
+          <div class="when">2022 — 2026</div>
+          <div class="what">
+            <h3><span class="en">South East Technological University</span><span class="zh">爱尔兰东南理工大学</span></h3>
+            <p class="org"><span class="en">BSc (Hons) Software Development · Second-Class Honours (2:2) · Ireland</span><span class="zh">软件开发 荣誉学士 · 二等二学位 · 爱尔兰</span></p>
+            <p><span class="en">Five years in Ireland (1-year foundation + 4-year BSc). Programming, algorithms, AI, cloud development and software architecture.</span><span class="zh">爱尔兰五年（一年预科 + 四年本科），学习编程、算法、人工智能、云开发与软件架构。</span></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3 / PRACTICE -->
+    <section class="block" id="work">
+      <div class="block-head">
+        <span class="num">3 /</span>
+        <h2><span class="en">PRACTICE</span><span class="zh">实践经历</span></h2>
+        <span class="sec-note"><span class="en">8 ROLES · 2023 → NOW</span><span class="zh">8 段 · 2023 至今</span></span>
+      </div>
+      <div class="rows">
+        <article class="row row-twin">
+          <div class="when">2026.10 — 2026.11</div>
+          <div class="what">
+            <h3><span class="en">Digital Twin Developer</span><span class="zh">斗轮机数字孪生项目开发</span></h3>
+            <p class="org"><span class="en">Changsha University of Science &amp; Technology · Bucket-wheel Reclaimer</span><span class="zh">长沙理工大学 · 斗轮机数字孪生</span></p>
+            <p><span class="en">Built a digital-twin HMI for a bucket-wheel reclaimer: bound the 3D model to six motion channels — travel, slew, luff, wheel, belt and tripper — and audited axes, directions and travel limits so the on-screen animation stayed consistent with the real machine. Delivered the node-binding specification and Blender model for the client's FStudio 3D component.</span><span class="zh">为斗轮机开发数字孪生交互界面：将三维模型绑定到大车行走、回转、俯仰、斗轮、皮带与尾车六个运动通道，并校核轴心、方向与行程限位，确保界面动画与真实设备运行保持一致。向甲方交付节点绑定说明与 Blender 模型，供其 FStudio 3D 组件接入。</span></p>
+            <button class="twin-open" id="twin-open" type="button" aria-haspopup="dialog">
+              <span class="to-bracket" aria-hidden="true">[</span>
+              <span class="to-dot" aria-hidden="true"></span>
+              <span class="en">EXPLORE THE 3D MODEL</span><span class="zh">探索 3D 模型</span>
+              <span class="to-arrow" aria-hidden="true">↗</span>
+              <span class="to-bracket" aria-hidden="true">]</span>
+            </button>
+          </div>
+        </article>
+        <article class="row" id="work-ta">
+          <div class="when">2026.09 — 2026.12</div>
+          <div class="what">
+            <h3><span class="en">Teaching Assistant</span><span class="zh">课程助教</span></h3>
+            <p class="org"><span class="en">Xi'an Jiaotong-Liverpool University · Suzhou</span><span class="zh">西交利物浦大学 · 苏州</span></p>
+            <p><span class="en">TA for Mathematics for AI &amp; Data Science, Networking &amp; Distributed Computing, and Technology Fundamentals — 5 classes, ~150 students. Mentored lab sessions on debugging and problem-solving.</span><span class="zh">担任三门课助教，覆盖 5 个班约 150 名学生，负责实验课代码调试与问题定位辅导。</span></p>
+            <button class="twin-open" id="ta-open" type="button" aria-haspopup="dialog">
+              <span class="to-bracket" aria-hidden="true">[</span>
+              <span class="to-dot" aria-hidden="true"></span>
+              <span class="en">VIEW MENTORSHIP WORK</span><span class="zh">查看辅导作品</span>
+              <span class="to-arrow" aria-hidden="true">↗</span>
+              <span class="to-bracket" aria-hidden="true">]</span>
+            </button>
+          </div>
+        </article>
+        <article class="row">
+          <div class="when">2026.07 — 2026.09</div>
+          <div class="what">
+            <h3><span class="en">AI Algorithm Intern</span><span class="zh">AI 算法实习生</span></h3>
+            <p class="org"><span class="en">Hunan Water Planning &amp; Design Institute</span><span class="zh">湖南省水务规划设计院</span></p>
+            <p><span class="en">Crawled every water-resource tender on Hunan's public bidding portal since machine-led tendering — scoring weights, all bidder quotes and the winning price. Fitted a logistic regression to learn the quote bands companies favour across project types and where each project's price tends to land, then derived the quote that maximises win probability for the institute — the quote weight dominates the score. A DeepSeek layer scored company–project fit.</span><span class="zh">爬取湖南省招标网自机器管招投标以来的全部水利项目数据，含各数据权重、所有公司报价与中标价；用逻辑回归学习不同类型项目常见的报价区间与价格位置，并结合报价权重最高的规则，推算出湖南省水务院更容易中标的报价区间；另用 DeepSeek 辅助评估公司–项目匹配度。</span></p>
+            <button class="twin-open" id="bid-open" type="button" aria-haspopup="dialog">
+              <span class="to-bracket" aria-hidden="true">[</span>
+              <span class="to-dot" aria-hidden="true"></span>
+              <span class="en">VIEW TENDER MODEL</span><span class="zh">查看报价模型</span>
+              <span class="to-arrow" aria-hidden="true">↗</span>
+              <span class="to-bracket" aria-hidden="true">]</span>
+            </button>
+          </div>
+        </article>
+        <article class="row">
+          <div class="when">2026.06</div>
+          <div class="what">
+            <h3><span class="en">Simultaneous Interpreter</span><span class="zh">同声传译 / 技术翻译</span></h3>
+            <p class="org"><span class="en">Oecusse Reservoir Project · Timor-Leste</span><span class="zh">东帝汶欧库西省水库项目</span></p>
+            <p><span class="en">Simultaneous interpretation for high-level negotiations and bidding meetings, plus translation of a large body of water-engineering documents. Also built an interactive web visualisation for the Governor of Oecusse: real terrain flown by drone, with a rainfall slider that floods the valley so officials can see which areas would be affected.</span><span class="zh">为高层谈判与投标会议提供同声传译，并翻译大量水利工程技术文档。另为欧库西省长制作了交互式洪水可视化网页：以无人机航拍区域构建真实地形，拖动降雨滑块即可淹没河谷，直观看到哪些地区会受到影响。</span></p>
+            <button class="twin-open" id="oec-open" type="button" aria-haspopup="dialog">
+              <span class="to-bracket" aria-hidden="true">[</span>
+              <span class="to-dot" aria-hidden="true"></span>
+              <span class="en">EXPLORE THE FLOOD MODEL</span><span class="zh">查看洪水模拟</span>
+              <span class="to-arrow" aria-hidden="true">↗</span>
+              <span class="to-bracket" aria-hidden="true">]</span>
+            </button>
+          </div>
+        </article>
+        <article class="row">
+          <div class="when">2025.06 — 2025.09</div>
+          <div class="what">
+            <h3><span class="en">Edge Computing R&amp;D Intern</span><span class="zh">边缘计算研发实习生</span></h3>
+            <p class="org"><span class="en">Hunan Water Planning &amp; Design Institute</span><span class="zh">湖南省水务规划设计院</span></p>
+            <p><span class="en">Proposed migrating legacy RTU systems from MCUs to high-performance CPUs; embedded a CV model monitoring dam water levels, with final gate decisions kept by staff.</span><span class="zh">提出 RTU 从 MCU 升级到高性能 CPU 的架构方案，嵌入视觉模型监测水位，开闸决定权仍由工作人员掌握。</span></p>
+            <button class="twin-open" id="rtu-open" type="button" aria-haspopup="dialog">
+              <span class="to-bracket" aria-hidden="true">[</span><span class="to-dot" aria-hidden="true"></span>
+              <span class="en">EXPLORE THE RTU BOARD</span><span class="zh">查看 RTU 电路板</span>
+              <span class="to-arrow" aria-hidden="true">↗</span><span class="to-bracket" aria-hidden="true">]</span>
+            </button>
+          </div>
+        </article>
+        <article class="row">
+          <div class="when">2025.02 — 2025.06</div>
+          <div class="what">
+            <h3><span class="en">AI + Drone Research Intern</span><span class="zh">AI + 无人机巡检研究实习生</span></h3>
+            <p class="org"><span class="en">Zhicheng Huishang Info Tech · Dam Safety Center</span><span class="zh">湖南智城慧商 · 大坝安全中心</span></p>
+            <p><span class="en">Used infrared temperature differences to find seepage and piping invisible in visible light — a new angle for image recognition beyond RGB. Fused RGB to filter vegetation and water, then read RTK coordinates from drone imagery, plotted them on maps, and let crews navigate straight to each problem point.</span><span class="zh">用红外温差定位可见光下看不见的渗漏与管涌，为图像识别提供了可见光之外的新角度；融合可见光排除植被与水体干扰，再从无人机图像读取 RTK 经纬度落到地图上，让工作人员直接导航到问题点。</span></p>
+            <button class="twin-open" id="drone-open" type="button" aria-haspopup="dialog">
+              <span class="to-bracket" aria-hidden="true">[</span><span class="to-dot" aria-hidden="true"></span>
+              <span class="en">EXPLORE INFRARED INSPECTION</span><span class="zh">查看红外巡检成果</span>
+              <span class="to-arrow" aria-hidden="true">↗</span><span class="to-bracket" aria-hidden="true">]</span>
+            </button>
+          </div>
+        </article>
+        <article class="row">
+          <div class="when">2024.06 — 2024.08</div>
+          <div class="what">
+            <h3><span class="en">Software Architecture &amp; UI Design Intern</span><span class="zh">软件架构与 UI 设计实习生</span></h3>
+            <p class="org"><span class="en">Zhongxiang Intelligent Construction</span><span class="zh">中湘智能建造 · 中台部门</span></p>
+            <p><span class="en">In the middle-platform operations team, we set out to build one ERP. Vendors kept showing us software that looked ugly and felt stiff — so we designed the interactions ourselves.</span><span class="zh">在中台运营部门，公司希望开发一套统一的 ERP；咨询过多家公司，做出来的软件都很丑、交互很差，于是我们决定自己设计交互。</span></p>
+            <button class="twin-open" id="ux-open" type="button" aria-haspopup="dialog">
+              <span class="to-bracket" aria-hidden="true">[</span><span class="to-dot" aria-hidden="true"></span>
+              <span class="en">EXPLORE THE INTERACTIONS</span><span class="zh">查看交互设计成果</span>
+              <span class="to-arrow" aria-hidden="true">↗</span><span class="to-bracket" aria-hidden="true">]</span>
+            </button>
+          </div>
+        </article>
+        <article class="row">
+          <div class="when">2023.06 — 2023.08</div>
+          <div class="what">
+            <h3><span class="en">Embedded Systems Intern</span><span class="zh">嵌入式系统实习生</span></h3>
+            <p class="org"><span class="en">Zhicheng Huishang Information Technology</span><span class="zh">湖南智城慧商信息技术</span></p>
+            <p><span class="en">Hands-on STM32 work; developed and debugged stepper-motor control logic — reading the motor as an assembly of stator windings, rotor and bearings rather than a black box.</span><span class="zh">实操 STM32，开发并调试步进电机控制逻辑；把电机拆成定子绕组、转子与轴承来理解，而不是当一个黑盒。</span></p>
+            <button class="twin-open" id="stepper-open" type="button" aria-haspopup="dialog">
+              <span class="to-bracket" aria-hidden="true">[</span><span class="to-dot" aria-hidden="true"></span>
+              <span class="en">EXPLORE THE MOTOR</span><span class="zh">查看电机结构</span>
+              <span class="to-arrow" aria-hidden="true">↗</span><span class="to-bracket" aria-hidden="true">]</span>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4 / SKILLS -->
+    <section class="block" id="skills">
+      <div class="block-head">
+        <span class="num">4 /</span>
+        <h2><span class="en">SKILLS</span><span class="zh">技能</span></h2>
+      </div>
+      <div class="skill-grid">
+        <article class="skill-tile">
+          <div class="skill-tile-top">
+            <span class="skill-index">01</span>
+            <h3><span class="en">CODE</span><span class="zh">编程</span></h3>
+            <span class="skill-mark">⌘</span>
+          </div>
+          <div class="skill-chips">
+            <span class="chip">Python</span><span class="chip">Java</span><span class="chip">C++</span>
+            <span class="chip">PyTorch</span><span class="chip">YOLO</span><span class="chip">OpenCV</span>
+            <span class="chip">DeepSeek API</span><span class="chip">Trae Agent</span><span class="chip">STM32</span>
+            <span class="chip">UI/UX</span>
+          </div>
+        </article>
+
+        <article class="skill-tile">
+          <div class="skill-tile-top">
+            <span class="skill-index">02</span>
+            <h3><span class="en">AI / ML</span><span class="zh">人工智能</span></h3>
+            <span class="skill-mark">✳</span>
+          </div>
+          <div class="skill-chips">
+            <span class="chip"><span class="en">Machine learning</span><span class="zh">机器学习</span></span>
+            <span class="chip"><span class="en">Logistic regression</span><span class="zh">逻辑回归</span></span>
+            <span class="chip"><span class="en">Deep learning</span><span class="zh">深度学习</span></span>
+            <span class="chip"><span class="en">Regression</span><span class="zh">回归分析</span></span>
+            <span class="chip"><span class="en">Mean reversion</span><span class="zh">均值回归</span></span>
+            <span class="chip"><span class="en">Time-series</span><span class="zh">时间序列</span></span>
+            <span class="chip"><span class="en">Data mining</span><span class="zh">数据挖掘</span></span>
+          </div>
+        </article>
+
+        <article class="skill-tile skill-tile-wide">
+          <div class="skill-tile-top">
+            <span class="skill-index">03</span>
+            <h3><span class="en">COMMUNITY</span><span class="zh">社区</span></h3>
+            <span class="skill-mark">↗</span>
+          </div>
+          <div class="skill-chips">
+            <span class="chip"><span class="en">SETU student liaison</span><span class="zh">SETU 学生联络人</span></span>
+            <span class="chip"><span class="en">International Day · Chinese pavilion</span><span class="zh">国际日 · 中国展台</span></span>
+            <span class="chip"><span class="en">Lead organiser · 2025 &amp; 2026</span><span class="zh">主组织者 · 2025 &amp; 2026</span></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5 / AI DIGITAL TWIN -->
+    <section class="block" id="ai-twin">
+      <div class="block-head">
+        <span class="num">5 /</span>
+        <h2><span class="en">ASK MY DIGITAL TWIN</span><span class="zh">问问我的数字孪生</span></h2>
+      </div>
+      <p class="ai-twin-intro">
+        <span class="en">An AI that speaks as I do — trained on my real experience. Ask about my background, projects or why I do what I do.</span>
+        <span class="zh">一个用我的口吻说话的 AI —— 基于我的真实经历。可以问我的背景、项目，或者我为什么这么做。</span>
+      </p>
+
+      <div class="ai-twin-shell">
+        <div class="ai-twin-chat" id="ai-twin-chat" aria-live="polite">
+          <div class="ai-twin-empty" id="ai-twin-empty">
+            <span class="en">Ask me anything. I'll answer as myself.</span>
+            <span class="zh">随便问我点什么，我会以「我」的口吻回答。</span>
+          </div>
+        </div>
+
+        <div class="ai-twin-quick" id="ai-twin-quick">
+          <button type="button" data-q-en="Introduce yourself in your own words." data-q-zh="用你自己的话介绍一下你自己。"><span class="en">INTRODUCE YOURSELF</span><span class="zh">自我介绍</span></button>
+          <button type="button" data-q-en="What is your strongest advantage, and what is your weakness?" data-q-zh="你最大的优势和缺点分别是什么？"><span class="en">STRENGTHS &amp; WEAKNESSES</span><span class="zh">优势与缺点</span></button>
+          <button type="button" data-q-en="Tell me about using drone thermal imaging to detect leaks." data-q-zh="讲讲你用无人机热成像识别渗漏的经历。"><span class="en">THERMAL LEAK DETECTION</span><span class="zh">热成像渗漏识别</span></button>
+          <button type="button" data-q-en="Tell me about your teaching assistant experience." data-q-zh="讲讲你的助教经历。"><span class="en">TEACHING ASSISTANT</span><span class="zh">助教经历</span></button>
+          <button type="button" data-q-en="Tell me about the RTU board you helped design." data-q-zh="讲讲你参与设计的 RTU 主板。"><span class="en">RTU BOARD</span><span class="zh">RTU 主板</span></button>
+        </div>
+
+        <div class="ai-twin-compose" id="ai-twin-compose">
+          <span class="ai-twin-status" id="ai-twin-status" aria-hidden="true"></span>
+          <input id="ai-twin-input" type="text" autocomplete="off"
+                 placeholder="Ask me anything…"
+                 data-ph-en="Ask me anything…"
+                 data-ph-zh="问我任何问题…" />
+          <button id="ai-twin-send" type="button" aria-label="Send">
+            <span class="en">SEND</span><span class="zh">发送</span>
+          </button>
+        </div>
+        <p class="ai-twin-note">
+          <span class="en">Powered by a digital twin built from my own story. Answers may be imperfect — for anything important, reach me directly below.</span>
+          <span class="zh">由基于我个人经历构建的数字孪生驱动。回答未必完美 —— 重要事项请直接在下方联系我。</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- 6 / CONTACT -->
+    <section class="block" id="contact">
+      <div class="block-head">
+        <span class="num">6 /</span>
+        <h2><span class="en">CONTACT</span><span class="zh">联系我</span></h2>
+      </div>
+      <div class="contact-grid">
+        <a class="contact-row" href="mailto:zihan.wang2604@student.xjtlu.edu.cn">
+          <span class="contact-name"><span class="en">UNIVERSITY EMAIL</span><span class="zh">学校邮箱</span></span>
+          <span class="contact-value">zihan.wang2604@student.xjtlu.edu.cn</span>
+          <span class="contact-arrow">↗</span>
+        </a>
+        <a class="contact-row" href="mailto:zhw001128@gmail.com">
+          <span class="contact-name"><span class="en">PERSONAL EMAIL</span><span class="zh">个人邮箱</span></span>
+          <span class="contact-value">zhw001128@gmail.com</span>
+          <span class="contact-arrow">↗</span>
+        </a>
+        <a class="contact-row" href="tel:+8618573996621">
+          <span class="contact-name"><span class="en">PHONE</span><span class="zh">电话</span></span>
+          <span class="contact-value">+86 185 7399 6621</span>
+          <span class="contact-arrow">↗</span>
+        </a>
+        <a class="contact-row" href="https://github.com/c00280203" target="_blank" rel="noopener">
+          <span class="contact-name"><span class="en">GITHUB</span><span class="zh">代码仓库</span></span>
+          <span class="contact-value">github.com/c00280203</span>
+          <span class="contact-arrow">↗</span>
+        </a>
+      </div>
+      <p class="copy-tip" id="copy-tip" aria-live="polite"></p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="foot">
+  <span>© 2026 ZIHAN WANG</span>
+  <span><span class="en">A PERSONAL WEBSITE · BUILT WITH AI</span><span class="zh">个人网站 · AI 辅助制作</span></span>
+</footer>
+
+<!-- ============ 斗轮机数字孪生 · 玻璃详情卡 ============ -->
+<div class="twin-overlay" id="twin-overlay" aria-hidden="true">
+  <div class="twin-card" id="twin-card" role="dialog" aria-modal="true" aria-labelledby="twin-title" tabindex="-1">
+    <button class="twin-close" id="twin-close" type="button" aria-label="Close">×</button>
+
+    <div class="twin-head">
+      <h2 id="twin-title"><span class="en">Bucket-wheel Reclaimer · Digital Twin</span><span class="zh">斗轮机数字孪生交互界面</span></h2>
+      <p class="twin-sub"><span class="en">Changsha University of Science &amp; Technology · 2026.10</span><span class="zh">长沙理工大学 · 2026.10</span></p>
+    </div>
+
+    <div class="twin-main">
+      <div class="twin-left">
+        <div class="twin-view" id="twin-view">
+          <div class="twin-loading" id="twin-loading"><span class="en">LOADING 3D MODEL…</span><span class="zh">正在加载 3D 模型…</span></div>
+        </div>
+        <p class="twin-hint"><span class="en">DRAG TO ROTATE · SCROLL DOWN TO CLOSE</span><span class="zh">拖动旋转 · 下滑收起</span></p>
+      </div>
+
+      <div class="twin-right">
+        <p><span class="en">Tap a topic to explore the model.</span><span class="zh">点选主题，查看模型细节。</span></p>
+        <ul class="twin-tags">
+          <li><button type="button" class="on" data-view="0"><span class="en">01 &nbsp; OVERVIEW</span><span class="zh">01 &nbsp; 整体结构</span></button></li>
+          <li><button type="button" data-view="1"><span class="en">02 &nbsp; BUCKET WHEEL</span><span class="zh">02 &nbsp; 斗轮细节</span></button></li>
+          <li><button type="button" data-view="2"><span class="en">03 &nbsp; SIDE VIEW</span><span class="zh">03 &nbsp; 侧面视角</span></button></li>
+          <li><button type="button" data-demo="slew"><span class="en">04 &nbsp; SLEW DEMO</span><span class="zh">04 &nbsp; 吊臂转动演示</span></button></li>
+          <li><button type="button" data-demo="luff"><span class="en">05 &nbsp; LUFF DEMO</span><span class="zh">05 &nbsp; 吊臂抬起演示</span></button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TA 辅导作品 · 毛玻璃作品集卡 ============ -->
+<div class="ta-overlay" id="ta-overlay" aria-hidden="true">
+  <div class="ta-card" id="ta-card" role="dialog" aria-modal="true" aria-labelledby="ta-title" tabindex="-1">
+    <button class="ta-close" id="ta-close" type="button" aria-label="Close">×</button>
+    <div class="ta-head">
+      <span class="ta-kicker"><span class="en">MENTORSHIP / 2026</span><span class="zh">辅导作品 / 2026</span></span>
+      <h2 id="ta-title"><span class="en">What I built for students</span><span class="zh">我帮同学做的东西</span></h2>
+      <p class="ta-sub"><span class="en">Five real course projects — click to explore</span><span class="zh">五个真实课程项目 — 点选查看</span></p>
+    </div>
+    <div class="ta-body">
+      <div class="ta-stage">
+        <div class="ta-shot" id="ta-shot"></div>
+      </div>
+      <div class="ta-info">
+        <ul class="ta-list" id="ta-list">
+          <li><button type="button" class="on" data-ta="0"><span class="ta-n">01</span><span class="en">Knowledge Hub</span><span class="zh">知识检索系统</span></button></li>
+          <li><button type="button" data-ta="1"><span class="ta-n">02</span><span class="en">Data Analysis</span><span class="zh">数据分析辅导</span></button></li>
+          <li><button type="button" data-ta="2"><span class="ta-n">03</span><span class="en">SubmitCheck · Student</span><span class="zh">作业提交 · 学生端</span></button></li>
+          <li><button type="button" data-ta="3"><span class="ta-n">04</span><span class="en">SubmitCheck · Teacher</span><span class="zh">作业提交 · 教师端</span></button></li>
+          <li><button type="button" data-ta="4"><span class="ta-n">05</span><span class="en">Clario</span><span class="zh">学习规划网站</span></button></li>
+        </ul>
+        <div class="ta-detail" id="ta-detail">
+          <p class="ta-role"><span class="en">FULL-STACK · COURSEWORK PROTOTYPE</span><span class="zh">全栈 · 课程项目原型</span></p>
+          <p class="ta-desc" id="ta-desc"></p>
+          <div class="ta-stack" id="ta-stack"></div>
+        </div>
+        <div class="ta-controls">
+          <span class="ta-hint"><span class="en">AUTO PLAY · TAP AGAIN TO RESUME</span><span class="zh">自动轮播 · 再点一次继续</span></span>
+          <span class="ta-count" id="ta-count">01 / 05</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 招投标报价模型 · 玻璃详情卡 ============ -->
+<div class="ta-overlay" id="bid-overlay" aria-hidden="true">
+  <div class="ta-card" id="bid-card" role="dialog" aria-modal="true" aria-labelledby="bid-title" tabindex="-1">
+    <button class="ta-close" id="bid-close" type="button" aria-label="Close">×</button>
+    <div class="ta-head">
+      <span class="ta-kicker"><span class="en">TENDER INTELLIGENCE / 2026</span><span class="zh">招投标算法 / 2026</span></span>
+      <h2 id="bid-title"><span class="en">Modelling the winning quote</span><span class="zh">预测更容易中标的报价</span></h2>
+      <p class="ta-sub"><span class="en">Hunan “Six-Random, Five-Interval” water-resource tenders · logistic regression</span><span class="zh">湖南「六随机五区间」水利招投标 · 逻辑回归</span></p>
+    </div>
+    <div class="ta-body">
+      <div class="ta-stage">
+        <div class="ta-shot" id="bid-shot"></div>
+      </div>
+      <div class="ta-info">
+        <ul class="ta-list" id="bid-list">
+          <li><button type="button" class="on" data-bid="0"><span class="ta-n">01</span><span class="en">Quote bands</span><span class="zh">报价区间分布</span></button></li>
+          <li><button type="button" data-bid="1"><span class="ta-n">02</span><span class="en">Logistic regression</span><span class="zh">逻辑回归曲线</span></button></li>
+          <li><button type="button" data-bid="2"><span class="ta-n">03</span><span class="en">Recommended quote</span><span class="zh">最优报价建议</span></button></li>
+        </ul>
+        <div class="ta-detail" id="bid-detail">
+          <p class="ta-role"><span class="en">DATA · CRAWLER · LOGISTIC REGRESSION</span><span class="zh">数据 · 爬虫 · 逻辑回归</span></p>
+          <p class="ta-desc" id="bid-desc"></p>
+          <div class="ta-stack" id="bid-stack"></div>
+        </div>
+        <div class="ta-controls">
+          <span class="ta-hint"><span class="en">AUTO PLAY · TAP AGAIN TO RESUME</span><span class="zh">自动轮播 · 再点一次继续</span></span>
+          <span class="ta-count" id="bid-count">01 / 03</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 欧库西洪水模拟 · 玻璃详情卡 ============ -->
+<div class="ta-overlay" id="oec-overlay" aria-hidden="true">
+  <div class="ta-card oec-card" id="oec-card" role="dialog" aria-modal="true" aria-labelledby="oec-title" tabindex="-1">
+    <button class="ta-close" id="oec-close" type="button" aria-label="Close">×</button>
+    <div class="ta-head">
+      <span class="ta-kicker"><span class="en">OECUSSE · TIMOR-LESTE / 2026</span><span class="zh">东帝汶欧库西 / 2026</span></span>
+      <h2 id="oec-title"><span class="en">Seeing the flood before it happens</span><span class="zh">在洪水到来之前看见它</span></h2>
+      <p class="ta-sub"><span class="en">Terrain from drone survey · drag to orbit · raise the rainfall to see which areas flood</span><span class="zh">无人机航测地形 · 拖拽旋转 · 拉高降雨量查看哪些地区被淹</span></p>
+    </div>
+    <div class="ta-body oec-body">
+      <div class="ta-stage">
+        <div class="oec-stage" id="oec-stage">
+          <div class="oec-loading" id="oec-loading"><span class="oec-spin"></span><span class="en">Loading terrain…</span><span class="zh">正在加载地形…</span></div>
+          <div class="oec-badge" id="oec-status">LOADING</div>
+        </div>
+        <div class="oec-controls">
+          <div class="oec-slider-row">
+            <label for="oec-rain"><span class="en">Rainfall</span><span class="zh">降雨量</span></label>
+            <input type="range" id="oec-rain" min="0" max="200" step="0.5" value="158.5" />
+            <span class="oec-rain-val"><b id="oec-rain-value">158.5</b> mm/day</span>
+          </div>
+          <div class="oec-legend">
+            <span><i class="oec-sw flood"></i><span class="en">Flood zone</span><span class="zh">淹没区</span></span>
+            <span><i class="oec-sw river"></i><span class="en">River</span><span class="zh">河流</span></span>
+            <span><i class="oec-sw point"></i><span class="en">Surveyed sites</span><span class="zh">航测地点</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="ta-info">
+        <ul class="ta-list" id="oec-list">
+          <li><button type="button" class="on" data-oec="0"><span class="ta-n">01</span><span class="en">The brief</span><span class="zh">任务背景</span></button></li>
+          <li><button type="button" data-oec="1"><span class="ta-n">02</span><span class="en">Drone-surveyed terrain</span><span class="zh">无人机航测地形</span></button></li>
+          <li><button type="button" data-oec="2"><span class="ta-n">03</span><span class="en">Flood simulation</span><span class="zh">洪水演进模拟</span></button></li>
+          <li><button type="button" data-oec="3"><span class="ta-n">04</span><span class="en">For decision-makers</span><span class="zh">面向决策者</span></button></li>
+        </ul>
+        <div class="ta-detail">
+          <p class="ta-role"><span class="en">INTERPRETER · WEB VISUALISATION</span><span class="zh">技术翻译 · 可视化网页</span></p>
+          <p class="ta-desc" id="oec-desc"></p>
+          <div class="ta-stack" id="oec-stack"></div>
+        </div>
+        <div class="oec-tip"><span class="en">↻ Drag to rotate · scroll to zoom · slide to flood</span><span class="zh">↻ 拖拽旋转 · 滚轮缩放 · 滑块涨水</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RTU 边缘计算 · 3D 装配玻璃详情卡 ============ -->
+<div class="ta-overlay rtu-overlay" id="rtu-overlay" aria-hidden="true">
+  <div class="ta-card rtu-card" id="rtu-card" role="dialog" aria-modal="true" aria-labelledby="rtu-title" tabindex="-1">
+    <button class="ta-close" id="rtu-close" type="button" aria-label="Close">×</button>
+    <div class="ta-head">
+      <span class="ta-kicker"><span class="en">EDGE COMPUTING · RTU / 2025</span><span class="zh">边缘计算 · RTU / 2025</span></span>
+      <h2 id="rtu-title"><span class="en">From remote terminal to edge intelligence</span><span class="zh">从远程终端到边缘智能</span></h2>
+    </div>
+    <div class="rtu-body">
+      <div class="rtu-stage" id="rtu-stage">
+        <div class="rtu-badge" id="rtu-status">LOADING</div>
+        <div class="rtu-cue" id="rtu-cue"><span class="en">↓ SCROLL TO ASSEMBLE</span><span class="zh">↓ 下滑装配</span></div>
+      </div>
+      <p class="rtu-brief"><span class="en">I re-architected a legacy RTU around a high-performance CPU so the board runs an on-device vision model — reading water level at the edge and sending only the result to the control centre, while a human keeps the final call on opening a gate.</span><span class="zh">我把原有以小型 MCU 为核心的 RTU 重构到高性能 CPU 架构，让板子本身就能跑视觉模型：在边缘判读水位，只把结果回传控制中心，开闸的最终决定仍由工作人员做出。</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ AI + Drone · 红外巡检轮播卡（复用 TA 卡骨架 + 点击测温 + 上传定位） ============ -->
+<div class="ta-overlay" id="drone-overlay" aria-hidden="true">
+  <div class="ta-card drone-card" id="drone-card" role="dialog" aria-modal="true" aria-labelledby="drone-title" tabindex="-1">
+    <button class="ta-close" id="drone-close" type="button" aria-label="Close">×</button>
+    <div class="ta-head">
+      <span class="ta-kicker"><span class="en">INFRARED INSPECTION / 2025</span><span class="zh">红外巡检 / 2025</span></span>
+      <h2 id="drone-title"><span class="en">Seeing what the eye cannot see</span><span class="zh">看见肉眼看不见的渗漏</span></h2>
+    </div>
+    <div class="ta-body drone-body">
+      <div class="ta-stage">
+        <div class="ta-shot drone-shot" id="drone-shot">
+          <img class="show" data-view="visible" src="assets/drone/visible-render.webp?v=drone17v20261126" alt="Visible-light dam photo — seepage invisible" loading="lazy">
+          <img data-view="thermal" src="assets/drone/thermal-render.webp?v=drone17v20261126" alt="Thermal image — cooler seepage band revealed" loading="lazy">
+          <img data-view="user" id="drone-user-img" alt="Your uploaded image" hidden>
+          <div class="drone-probe" id="drone-probe" aria-hidden="true"><i class="drone-probe-cross"></i><span class="drone-probe-val" id="drone-probe-val"></span></div>
+        </div>
+      </div>
+      <div class="ta-info">
+        <ul class="ta-list" id="drone-list">
+          <li><button type="button" class="on" data-drone="0"><span class="ta-n">01</span><span class="en">Visible light</span><span class="zh">可见光</span></button></li>
+          <li><button type="button" data-drone="1"><span class="ta-n">02</span><span class="en">Infrared</span><span class="zh">红外</span></button></li>
+        </ul>
+        <div class="ta-detail">
+          <p class="ta-role" id="drone-role"></p>
+          <p class="ta-desc" id="drone-desc"></p>
+        </div>
+        <div class="ta-controls">
+          <span class="ta-count" id="drone-count">01 / 02</span>
+        </div>
+      </div>
+      <div class="drone-upload">
+        <div class="drone-upload-line">
+          <label class="drone-file" for="drone-file" id="drone-drop">
+            <svg class="drone-file-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 16V4m0 0-4 4m4-4 4 4"/>
+              <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
+            </svg>
+            <span class="drone-file-txt"><span class="en">Upload image</span><span class="zh">上传图像</span></span>
+          </label>
+          <input type="file" id="drone-file" accept="image/*" hidden>
+          <span class="drone-readout" id="drone-readout" aria-live="polite"></span>
+        </div>
+        <p class="drone-nav-note" id="drone-nav-note"><span class="en">We also work on image-based navigation — a photo carrying location metadata can be opened straight in a map. Upload one to try it.</span><span class="zh">我们也做图像导航 — 带有位置元数据的照片可以直接在地图中打开。上传一张即可体验。</span></p>
+        <div class="drone-maps" id="drone-maps" aria-disabled="true" hidden>
+          <a href="#" target="_blank" rel="noopener" data-map="amap" aria-disabled="true"><span class="en">Amap</span><span class="zh">高德</span></a>
+          <a href="#" target="_blank" rel="noopener" data-map="baidu" aria-disabled="true"><span class="en">Baidu</span><span class="zh">百度</span></a>
+          <a href="#" target="_blank" rel="noopener" data-map="google" aria-disabled="true">Google</a>
+          <a href="#" target="_blank" rel="noopener" data-map="apple" aria-disabled="true">Apple Maps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 中台 ERP 交互设计 · 微交互玻璃卡 ============ -->
+<div class="ta-overlay" id="ux-overlay" aria-hidden="true">
+  <div class="ta-card ux-card" id="ux-card" role="dialog" aria-modal="true" aria-labelledby="ux-title" tabindex="-1">
+    <button class="ta-close" id="ux-close" type="button" aria-label="Close">×</button>
+    <div class="ta-head">
+      <span class="ta-kicker"><span class="en">MIDDLE-PLATFORM OPERATIONS / 2024</span><span class="zh">中台运营 / 2024</span></span>
+      <h2 id="ux-title"><span class="en">If the tools look wrong, design them yourself</span><span class="zh">工具不好看，就自己设计</span></h2>
+      <p class="ta-sub"><span class="en">One ERP for every business line. The vendors' demos were ugly and stiff — so we prototyped the component interactions in-house. One at a time.</span><span class="zh">一套 ERP 打通所有业务线。外部供应商的演示又丑又生硬，于是我们在内部把组件交互一个个做了原型 —— 一次只看一个。</span></p>
+    </div>
+    <div class="ta-body ux-body">
+      <div class="ta-stage">
+        <div class="ta-shot ux-shot" id="ux-shot">
+          <!-- 01 Eight Dot Orbit -->
+          <div class="ux-shot-inner show" data-ux-shot="0">
+            <div class="ux-orbit">
+              <i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i>
+              <i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i>
+            </div>
+          </div>
+          <!-- 02 Wave Scanner -->
+          <div class="ux-shot-inner" data-ux-shot="1">
+            <div class="ux-wave">
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+          <!-- 03 Triple Petal -->
+          <div class="ux-shot-inner" data-ux-shot="2">
+            <svg class="ux-petal" viewBox="0 0 64 64" aria-hidden="true">
+              <g transform="rotate(0 32 32)"><path class="p1" d="M32 32 C24 26 24 14 32 10 C40 14 40 26 32 32 Z" fill="#2A2E36"/></g>
+              <g transform="rotate(120 32 32)"><path class="p2" d="M32 32 C24 26 24 14 32 10 C40 14 40 26 32 32 Z" fill="#fff"/></g>
+              <g transform="rotate(240 32 32)"><path class="p3" d="M32 32 C24 26 24 14 32 10 C40 14 40 26 32 32 Z" fill="#2A2E36" opacity=".45"/></g>
+            </svg>
+          </div>
+          <!-- 04 Folder Drop -->
+          <div class="ux-shot-inner" data-ux-shot="3">
+            <div class="ux-folder">
+              <div class="ux-tray">
+                <span class="ux-doc"></span>
+              </div>
+            </div>
+          </div>
+          <!-- 05 Card Stack -->
+          <div class="ux-shot-inner" data-ux-shot="4">
+            <svg class="ux-stack" viewBox="0 0 64 64" aria-hidden="true">
+              <rect class="s1" x="12" y="14" width="34" height="12" rx="3" fill="none" stroke="#2A2E36" stroke-opacity=".42" stroke-width="1.5"/>
+              <rect class="s3" x="17" y="38" width="34" height="12" rx="3" fill="none" stroke="#2A2E36" stroke-opacity=".42" stroke-width="1.5"/>
+              <rect class="s2" x="12" y="26" width="34" height="12" rx="3" fill="#fff" stroke="#2A2E36" stroke-width="1.5"/>
+              <path class="sa" d="M53 28v10m0 0-3-3m3 3 3-3" fill="none" stroke="#2A2E36" stroke-width="1.8" stroke-linejoin="miter"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="ta-info">
+        <ul class="ta-list" id="ux-list">
+          <li><button type="button" data-ux="0" class="on"><span class="ta-n">01</span><span class="en">Eight Dot Orbit</span><span class="zh">八点轨道</span></button></li>
+          <li><button type="button" data-ux="1"><span class="ta-n">02</span><span class="en">Wave Scanner</span><span class="zh">波形扫描</span></button></li>
+          <li><button type="button" data-ux="2"><span class="ta-n">03</span><span class="en">Triple Petal</span><span class="zh">三叶展开</span></button></li>
+          <li><button type="button" data-ux="3"><span class="ta-n">04</span><span class="en">Folder Drop</span><span class="zh">文件夹拖放</span></button></li>
+          <li><button type="button" data-ux="4"><span class="ta-n">05</span><span class="en">Card Stack</span><span class="zh">层叠卡片</span></button></li>
+        </ul>
+        <div class="ta-detail">
+          <div class="ux-detail-item show" data-ux-detail="0">
+            <p class="ta-role">01 / 05 · COMPONENT INTERACTION</p>
+            <h3 class="ux-name"><span class="en">Eight Dot Orbit</span><span class="zh">八点轨道</span></h3>
+            <p class="ta-desc"><span class="en">A calm loading state for the ERP shell — eight dots that gather and release instead of a harsh spinner.</span><span class="zh">ERP 框架的轻量加载态：八个点聚拢又散开，替代生硬的转圈。</span></p>
+          </div>
+          <div class="ux-detail-item" data-ux-detail="1">
+            <p class="ta-role">02 / 05 · COMPONENT INTERACTION</p>
+            <h3 class="ux-name"><span class="en">Wave Scanner</span><span class="zh">波形扫描</span></h3>
+            <p class="ta-desc"><span class="en">Validation that reads as a gentle sweep across the form, not a wall of red error text.</span><span class="zh">表单校验像一道轻柔扫过的波，而不是一整面红色报错。</span></p>
+          </div>
+          <div class="ux-detail-item" data-ux-detail="2">
+            <p class="ta-role">03 / 05 · COMPONENT INTERACTION</p>
+            <h3 class="ux-name"><span class="en">Triple Petal</span><span class="zh">三叶展开</span></h3>
+            <p class="ta-desc"><span class="en">Three facets unfold from a shared centre, then settle back — one platform built from independent business modules.</span><span class="zh">三片弧面从同一中心展开又收拢 —— 一个中台，由彼此独立的业务模块拼成。</span></p>
+          </div>
+          <div class="ux-detail-item" data-ux-detail="3">
+            <p class="ta-role">04 / 05 · COMPONENT INTERACTION</p>
+            <h3 class="ux-name"><span class="en">Folder Drop</span><span class="zh">文件夹拖放</span></h3>
+            <p class="ta-desc"><span class="en">Batch upload for the ERP: drag a document in, the folder opens and swallows it with a soft bounce.</span><span class="zh">ERP 批量上传：把文件拖进去，文件夹张开、带弹性地把它收进去。</span></p>
+          </div>
+          <div class="ux-detail-item" data-ux-detail="4">
+            <p class="ta-role">05 / 05 · COMPONENT INTERACTION</p>
+            <h3 class="ux-name"><span class="en">Card Stack</span><span class="zh">层叠卡片</span></h3>
+            <p class="ta-desc"><span class="en">Three list cards slide into a new order — one clean drag, and the whole view follows.</span><span class="zh">三张列表卡片滑入新的顺序 —— 一次干净的拖动，整个视图跟着重排。</span></p>
+          </div>
+        </div>
+        <div class="ta-controls">
+          <span class="ta-hint"><span class="en">AUTO PLAY · TAP AGAIN TO RESUME</span><span class="zh">自动轮播 · 再点一次继续</span></span>
+          <span class="ta-count" id="ux-count">01 / 05</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Embedded Systems · 步进电机 3D 爆炸/装配玻璃详情卡 ============ -->
+<div class="ta-overlay stepper-overlay" id="stepper-overlay" aria-hidden="true">
+  <div class="ta-card stepper-card" id="stepper-card" role="dialog" aria-modal="true" aria-labelledby="stepper-title" tabindex="-1">
+    <button class="ta-close" id="stepper-close" type="button" aria-label="Close">×</button>
+    <div class="ta-head">
+      <span class="ta-kicker"><span class="en">EMBEDDED SYSTEMS · STEPPER MOTOR / 2023</span><span class="zh">嵌入式系统 · 步进电机 / 2023</span></span>
+      <h2 id="stepper-title"><span class="en">Inside the motor I learned to control</span><span class="zh">从内部理解我调试的这台电机</span></h2>
+    </div>
+    <div class="stepper-body">
+      <div class="stepper-stage" id="stepper-stage">
+        <div class="rtu-badge" id="stepper-status">LIVE 3D</div>
+        <div class="rtu-cue" id="stepper-cue"><span class="en">↓ SCROLL TO ASSEMBLE · SCROLL UP TO EXPLODE</span><span class="zh">↓ 下滑装配 · 上滑爆炸散开</span></div>
+      </div>
+      <p class="rtu-brief"><span class="en">Stator windings, rotor, bearings and end caps — slide them together into one compact core, pull them apart to see how each piece drives the next. This is the hardware behind the STM32 control logic I wrote and debugged.</span><span class="zh">定子绕组、转子、轴承与端盖 —— 下滑把它们合成一台紧凑的电机，上滑炸开看清每个零件如何带动下一个。这正是我当时用 STM32 编写并调试控制逻辑的硬件本体。</span></p>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./js/vendor/three.module.min.js",
+    "three/addons/": "./assets/twin/addons/"
+  }
+}
+</script>
+<script src="js/3d.js?v=procfixv20261126"></script>
+<script type="module" src="js/twin.js?v=procfixv20261126"></script>
+<script src="js/ta.js?v=zoomfixv20261126"></script>
+<script src="js/bid.js?v=vectorv20261126"></script>
+<script src="js/oec-card.js?v=scrollfix2v20261126"></script>
+<script type="module" src="js/oecusse.js?v=lazyv20261126"></script>
+<script src="js/rtu-card.js?v=procfixv20261126"></script>
+<script type="module" src="js/rtu.js?v=lazyv20261126"></script>
+<script src="js/drone-temps.js?v=drone11v20261125"></script>
+<script src="js/drone-card.js?v=autoplayv20261126"></script>
+<script src="js/ux-card.js?v=uxonecorev20261126"></script>
+<script src="js/stepper-card.js?v=procfixv20261126"></script>
+<script type="module" src="js/stepper.js?v=rafstopv20261126"></script>
+<script src="js/ai-twin.js?v=procfixv20261126"></script>
+</body>
+</html>

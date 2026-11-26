@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zihan Wang 王子涵 — Curriculum Vitae</title>
+<meta name="description" content="Zihan Wang (王子涵) — MSc AI @ XJTLU. Machine Learning, Computer Vision, Edge AI & Software Development.">
+<style>
+/* ============================================================
+   TWO-COLUMN PROFESSIONAL CV — dark sidebar + white main
+   Print-ready · real text layer · ATS friendly
+   ============================================================ */
+:root{
+  --navy:#1d2c47;
+  --navy-2:#263858;
+  --accent:#4a90d9;
+  --ink:#1a1a1a;
+  --ink-2:#3a4453;
+  --muted:#667085;
+  --zh:#7b8494;
+  --rule:#d9dee6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{
+  font-family:"Helvetica Neue",Helvetica,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+  color:var(--ink);background:#e9edf2;font-size:11px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+/* 打印时左侧深色条在每页重复 */
+body::before{
+  content:"";position:fixed;top:0;left:0;width:33%;height:100%;
+  background:var(--navy);z-index:-1;
+}
+/* 双语控制 */
+body.only-en .zh, body.only-en .zh-line{display:none!important}
+body.only-zh .en, body.only-zh .en-line{display:none!important}
+
+/* 工具栏 */
+.toolbar{
+  position:sticky;top:0;z-index:50;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;
+  padding:11px 16px;background:rgba(255,255,255,.95);border-bottom:1px solid var(--rule);
+}
+.toolbar .tip{color:var(--muted);font-size:12px;margin-right:6px}
+.seg{display:inline-flex;border:1px solid #bbb;border-radius:8px;overflow:hidden}
+.seg button{background:transparent;color:var(--ink-2);border:none;padding:7px 14px;font-size:12px;cursor:pointer;transition:.2s;border-right:1px solid #bbb;font-family:inherit}
+.seg button:last-child{border-right:none}
+.seg button.active{background:var(--navy);color:#fff;font-weight:700}
+.seg button:not(.active):hover{background:#f0f2f5}
+.print-btn{background:var(--navy);color:#fff;border:1px solid var(--navy);border-radius:8px;padding:8px 18px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+.print-btn:hover{background:var(--navy-2)}
+
+/* 纸张 */
+.page{
+  width:210mm;max-width:210mm;min-height:297mm;margin:26px auto 60px;
+  background:#fff;display:flex;box-shadow:0 14px 44px rgba(20,30,50,.18);position:relative;
+}
+/* 侧栏 */
+.side{
+  width:33%;flex:0 0 33%;background:var(--navy);color:#eaf0fa;
+  padding:14mm 8mm 12mm;position:relative;
+}
+.side .photo-wrap{text-align:center;margin-bottom:14px}
+.side .photo{
+  width:34mm;height:34mm;object-fit:cover;object-position:center 16%;
+  border-radius:50%;border:3px solid rgba(255,255,255,.85);
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+.side .nm{font-size:21px;font-weight:800;letter-spacing:-.4px;color:#fff;text-align:center;line-height:1.15}
+.side .nm-zh{font-size:12px;color:#a9bdd8;text-align:center;margin-top:2px;letter-spacing:2px}
+.side .role{
+  font-size:10.5px;color:var(--accent);text-align:center;margin:9px 0 4px;
+  font-weight:700;line-height:1.45;
+}
+.side .role .zh{display:block;color:#9fb2cd;font-weight:400;font-size:9.5px;margin-top:2px}
+
+.s-sec{margin-top:20px}
+.s-sec h2{
+  font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:#fff;
+  text-transform:uppercase;padding-bottom:5px;margin-bottom:9px;
+  border-bottom:1px solid rgba(255,255,255,.28);
+}
+.contact-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:9.6px;color:#d6e1f0;word-break:break-word;line-height:1.4}
+.contact-item svg{width:12px;height:12px;flex:0 0 12px;fill:var(--accent);margin-top:1px}
+.contact-item a{color:#d6e1f0;text-decoration:none}
+.contact-item .pri{color:#fff;font-weight:700}
+
+.skill-group{margin-bottom:9px}
+.skill-group .k{font-size:9.4px;font-weight:800;color:#fff;letter-spacing:.3px;margin-bottom:1px}
+.skill-group .v{font-size:9px;color:#bdcde2;line-height:1.4}
+.lang-item{font-size:9.6px;color:#d6e1f0;margin-bottom:5px;line-height:1.35}
+.lang-item b{color:#fff}
+.lang-item .lv{color:#9fb2cd;font-size:9px}
+
+/* 主栏 */
+.main{width:67%;flex:0 0 67%;padding:0 12mm 10mm;background:#fff;position:relative}
+.banner{
+  background:#e7edf4;margin:0 -12mm;padding:11mm 12mm 9mm;border-bottom:3px solid var(--navy);
+}
+.banner h1{font-size:26px;font-weight:800;letter-spacing:2px;color:var(--navy);line-height:1}
+.banner .sub{font-size:10px;color:var(--muted);letter-spacing:1.4px;margin-top:5px;text-transform:uppercase;font-weight:600}
+
+.sec{margin-top:16px}
+.sec h2{
+  font-size:11.5px;font-weight:800;letter-spacing:1.3px;color:var(--navy);
+  text-transform:uppercase;padding-bottom:4px;margin-bottom:10px;border-bottom:2px solid var(--navy);
+}
+.sec h2 .zh{font-size:10px;color:var(--muted);letter-spacing:0;font-weight:600;margin-left:6px;text-transform:none}
+
+.summary{font-size:10px;color:var(--ink-2);line-height:1.62}
+.summary .zh-line{color:var(--zh);font-size:9.4px;margin-top:4px;line-height:1.55}
+.kw{font-weight:800;color:var(--navy)}
+
+.job{margin-bottom:13px;page-break-inside:avoid;break-inside:avoid}
+.job-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.job-title{font-size:10.6px;font-weight:800;color:var(--ink)}
+.job-title .zh{font-weight:600;color:var(--muted);font-size:9.6px;margin-left:5px}
+.job-date{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:9px;color:var(--muted);white-space:nowrap}
+.job-org{font-size:9.5px;color:var(--muted);margin:2px 0 5px;font-style:italic}
+.job-org .zh{font-style:normal}
+.job ul{list-style:none}
+.job li{position:relative;padding-left:12px;margin-bottom:3px;font-size:9.7px;color:var(--ink-2);line-height:1.5}
+.job li::before{content:"";position:absolute;left:1px;top:6px;width:4px;height:4px;background:var(--accent);border-radius:50%}
+.job li .zh-line{color:var(--zh);font-size:9px;display:block;line-height:1.45}
+
+.edu{margin-bottom:11px;page-break-inside:avoid;break-inside:avoid}
+.edu .job-top{display:flex}
+.edu-degree{font-size:9.8px;color:var(--navy);font-weight:700;margin:1px 0 2px}
+.edu-degree .zh{display:block;color:var(--muted);font-weight:600;font-size:9px;margin-top:1px}
+.edu-note{font-size:9px;color:var(--muted);line-height:1.5}
+.edu-note .zh-line{color:var(--zh)}
+
+.act{margin-bottom:10px;page-break-inside:avoid;break-inside:avoid}
+.act h3{font-size:10px;font-weight:800}
+.act h3 .zh{font-weight:600;color:var(--muted);font-size:9px;margin-left:5px}
+.act .meta{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:9px;color:var(--accent);margin:1px 0 2px}
+.act .desc{font-size:9.3px;color:var(--ink-2);line-height:1.5}
+.act .desc .zh-line{color:var(--zh);font-size:9px;display:block}
+
+/* 打印 */
+@page{size:A4;margin:0}
+@media print{
+  html,body{background:#fff!important}
+  .toolbar{display:none!important}
+  body::before{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{margin:0!important;box-shadow:none!important;min-height:auto}
+  a{color:inherit!important}
+}
+@media (max-width:760px){
+  .page{width:100%;max-width:100%;flex-direction:column}
+  .side,.main{width:100%;flex:1 1 auto}
+  .banner{margin:0;padding:22px}
+  .main{padding:0 22px 24px}
+}
+</style>
+</head>
+<body class="bilingual">
+
+<div class="toolbar no-print">
+  <span class="tip">导出 PDF：点「打印」→ 目标选「另存为 PDF」→ 勾选「背景图形」</span>
+  <div class="seg" title="语言">
+    <button id="lg-bi" class="active">双语</button>
+    <button id="lg-en">EN</button>
+    <button id="lg-zh">中文</button>
+  </div>
+  <button class="print-btn" onclick="window.print()">⎙ 打印 / 导出 PDF</button>
+</div>
+
+<div class="page">
+
+  <!-- ============ 左侧深色栏 ============ -->
+  <aside class="side">
+    <div class="photo-wrap"><img src="assets/photo_cv.jpg" alt="Zihan Wang" class="photo" width="130" height="130"></div>
+    <div class="nm">Zihan Wang</div>
+    <div class="nm-zh">王 子 涵</div>
+    <div class="role">
+      <span class="en">AI / Machine Learning Engineer</span>
+      <span class="zh">人工智能 / 机器学习工程师</span>
+      <span class="en" style="display:block;margin-top:2px;color:#9fb2cd;font-weight:400">Computer Vision · Backend Developer</span>
+    </div>
+
+    <section class="s-sec">
+      <h2>Contact</h2>
+      <div class="contact-item"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 7L4 6.5V6l8 5.3 8-5.3v.5L12 11z"/></svg><a class="pri" href="mailto:zhw001128@gmail.com">zhw001128@gmail.com</a></div>
+      <div class="contact-item"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1L6.6 10.8z"/></svg><span>+86 185 7399 6621</span></div>
+      <div class="contact-item"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 7L4 6.5V6l8 5.3 8-5.3v.5L12 11z"/></svg><a href="mailto:zihan.wang2604@student.xjtlu.edu.cn">zihan.wang2604@student.xjtlu.edu.cn</a></div>
+      <div class="contact-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.95.68 1.92v2.85c0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg><a href="https://github.com/c00280203" target="_blank" rel="noopener">github.com/c00280203</a></div>
+    </section>
+
+    <section class="s-sec">
+      <h2>Skills</h2>
+      <div class="skill-group"><div class="k">AI / ML</div><div class="v">Machine Learning, Logistic Regression, PyTorch, Deep Learning</div></div>
+      <div class="skill-group"><div class="k">Computer Vision</div><div class="v">YOLO, OpenCV, Infrared Imaging, Thermal Analysis</div></div>
+      <div class="skill-group"><div class="k">Programming</div><div class="v">Python, Java, C++</div></div>
+      <div class="skill-group"><div class="k">LLM / Agent</div><div class="v">DeepSeek API, Trae Agent, Data Mining</div></div>
+      <div class="skill-group"><div class="k">Backend / Cloud</div><div class="v">Cloud Development, Software Architecture, Middle Platform</div></div>
+      <div class="skill-group"><div class="k">Edge / Embedded</div><div class="v">Edge Computing, RTU, STM32, Control Systems</div></div>
+      <div class="skill-group"><div class="k">Data</div><div class="v">Regression, Mean Reversion, Time Series, Data Analysis</div></div>
+      <div class="skill-group"><div class="k">Design</div><div class="v">UI/UX Design, Technical Documentation</div></div>
+    </section>
+
+    <section class="s-sec">
+      <h2>Languages</h2>
+      <div class="lang-item"><b>Chinese</b> <span class="zh">中文</span> — <span class="lv">Native <span class="zh">母语</span></span></div>
+      <div class="lang-item"><b>English</b> <span class="zh">英语</span> — <span class="lv">Near-native (5 yrs in Ireland)</span></div>
+      <div class="lang-item"><b>German</b> <span class="zh">德语</span> — <span class="lv">A2 (basic)</span></div>
+    </section>
+  </aside>
+
+  <!-- ============ 右侧主栏 ============ -->
+  <main class="main">
+    <div class="banner">
+      <h1>ZIHAN WANG</h1>
+      <div class="sub">MSc Artificial Intelligence · XJTLU</div>
+    </div>
+
+    <section class="sec">
+      <h2>Professional Summary <span class="zh">个人简介</span></h2>
+      <p class="summary">
+        <span class="en">MSc Artificial Intelligence student at XJTLU with a BSc (Hons) in Software Development (Second-Class Honours, 2:2) and five years of study in Ireland. Hands-on experience across <span class="kw">machine learning, computer vision, edge AI and software development</span> — from logistic-regression modelling and infrared/YOLO inspection to RTU edge-computing upgrades and middle-platform architecture. Near-native English, Chinese native speaker, and experienced technical translator. Seeking AI / ML, computer-vision, backend or data roles.</span>
+        <span class="zh-line">西交利物浦大学人工智能硕士在读，本科为爱尔兰东南理工大学软件开发荣誉学士（二等二学位），在爱尔兰学习生活五年。具备机器学习、计算机视觉、边缘 AI 与软件开发实战经验，涵盖逻辑回归建模、红外/YOLO 巡检、RTU 边缘计算升级与中台架构。中文母语、英语接近母语，具备技术翻译经验。</span>
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>Work Experience <span class="zh">工作经历</span></h2>
+
+      <div class="job">
+        <div class="job-top"><div class="job-title"><span class="en">Teaching Assistant</span><span class="zh">课程助教</span></div><div class="job-date">Sep 2026 – Dec 2026</div></div>
+        <div class="job-org"><span class="en">Xi'an Jiaotong-Liverpool University (XJTLU) · Suzhou, China</span><span class="zh">西交利物浦大学 · 苏州</span></div>
+        <ul>
+          <li><span class="en">TA for 3 courses — Mathematics for AI and Data Science, Networking and Distributed Computing, and Technology Fundamentals for AI &amp; Big Data — across <span class="kw">5 classes of 30+ students (~150 students)</span>.</span><span class="zh-line">担任三门课程助教，覆盖 5 个班级、每班 30 余人（约 150 名学生）。</span></li>
+          <li><span class="en">Mentored students in lab sessions on code debugging and technical problem-solving.</span><span class="zh-line">在实验课中辅导学生调试代码、定位并修复程序问题。</span></li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top"><div class="job-title"><span class="en">AI Algorithm Intern (Internal Corporate Competition)</span><span class="zh">AI 算法实习生（集团内部算法大赛）</span></div><div class="job-date">Jul 2026 – Sep 2026</div></div>
+        <div class="job-org"><span class="en">Hunan Province Water Planning and Design Institute Co., Ltd. (Hunan Construction Investment Group) · Remote / Hunan</span><span class="zh">湖南省水务规划设计院有限公司（湖南建设投资集团）· 远程 / 湖南</span></div>
+        <ul>
+          <li><span class="en">Represented the institute in a group-wide AI competition among dozens of subsidiary teams, building a <span class="kw">logistic regression</span> model for Hunan's "Six-Random, Five-Interval" machine-managed tendering system — predicting weight coefficients (summing to 1) and random bid-fluctuation coefficients.</span><span class="zh-line">代表公司参与建投集团数十家子公司同台竞技的 AI 大赛，针对"六随机五区间"机器管招投标系统构建逻辑回归模型，预测权重系数（和为 1）与随机下浮系数。</span></li>
+          <li><span class="en">Applied <span class="kw">mean reversion</span> to infer score-maximizing quotes; developed a <span class="kw">Trae-based agent</span> to capture public tendering data in real time and mine historical bidding strategies.</span><span class="zh-line">以均值回归法推算高分报价；基于 Trae 开发 Agent 实时抓取公开招投标数据并挖掘历史报价策略。</span></li>
+          <li><span class="en">Integrated the <span class="kw">DeepSeek API</span> for real-time company–project matching analysis (e.g. detecting missing qualification materials).</span><span class="zh-line">接入 DeepSeek API 实时分析公司与招标项目匹配度（如资质材料缺漏）。</span></li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top"><div class="job-title"><span class="en">Simultaneous Interpreter &amp; Technical Translator</span><span class="zh">同声传译及技术翻译</span></div><div class="job-date">Jun 2026</div></div>
+        <div class="job-org"><span class="en">Hunan Province Water Planning and Design Institute Co., Ltd. · Hunan</span><span class="zh">湖南省水务规划设计院有限公司 · 湖南</span></div>
+        <ul>
+          <li><span class="en">Provided simultaneous interpretation and translated critical technical documents for high-level negotiations, bidding and research meetings on the Oecusse reservoir project (Timor-Leste), ensuring accurate cross-cultural communication.</span><span class="zh-line">针对东帝汶欧库西省水库建设项目，为高层谈判、投标及科研会议提供同声传译并翻译关键技术文档，确保跨文化准确沟通。</span></li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top"><div class="job-title"><span class="en">Edge Computing R&amp;D Intern</span><span class="zh">边缘计算研发实习生</span></div><div class="job-date">Jun 2025 – Sep 2025</div></div>
+        <div class="job-org"><span class="en">Hunan Province Water Planning and Design Institute Co., Ltd. · Hunan</span><span class="zh">湖南省水务规划设计院有限公司 · 湖南</span></div>
+        <ul>
+          <li><span class="en">Proposed a legacy <span class="kw">RTU</span> architecture upgrade — migrating from MCUs incapable of image recognition to high-performance CPUs, significantly boosting on-site computing power.</span><span class="zh-line">主导提出传统 RTU 架构升级方案：由无法支持图像识别的 MCU 迁移至高性能 CPU，大幅提升现场算力。</span></li>
+          <li><span class="en">Embedded a <span class="kw">computer vision</span> model to monitor dam water levels and detect anomalies, feeding gate-opening judgments to a terminal server for final staff decision — helping prevent flood-season dam overtopping.</span><span class="zh-line">嵌入计算机视觉模型监测水坝水位、识别异常，将开闸判断传输至终端服务器由工作人员最终决策，防范汛期漫坝风险。</span></li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top"><div class="job-title"><span class="en">AI + Drone Research Intern</span><span class="zh">AI+无人机巡检研究实习生</span></div><div class="job-date">Feb 2025 – Jun 2025</div></div>
+        <div class="job-org"><span class="en">Hunan Zhicheng Huishang Information Technology Co., Ltd. (Partner: Dam Safety Center, Hunan Institute of Water Resources and Hydropower Research) · Hunan</span><span class="zh">湖南智城慧商信息技术有限公司（合作单位：湖南省水利水电科学研究院大坝安全中心）· 湖南</span></div>
+        <ul>
+          <li><span class="en">Proposed an <span class="kw">infrared-based</span> inspection method: unlike visible-light recognition, drone-borne infrared cameras read the temperature of every pixel; <span class="kw">thermal differential analysis</span> locates dam seepage, cracks and piping invisible to the naked eye.</span><span class="zh-line">提出基于红外镜头的巡检方法：机载红外镜头读取每个像素点温度，利用温差分析精准定位肉眼不可见的渗漏、裂缝及管涌。</span></li>
+          <li><span class="en">Designed autonomous flight paths for wide-area coverage, significantly reducing manual inspection costs.</span><span class="zh-line">设计无人机自主巡航路线实现大面积覆盖，显著降低人工巡检成本。</span></li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top"><div class="job-title"><span class="en">Software Architecture &amp; UI Design Intern</span><span class="zh">软件架构与 UI 设计实习生</span></div><div class="job-date">Jun 2024 – Aug 2024</div></div>
+        <div class="job-org"><span class="en">Zhongxiang Intelligent Construction Co., Ltd. · Hunan</span><span class="zh">中湘智能建造有限公司 · 湖南</span></div>
+        <ul>
+          <li><span class="en">Designed scalable <span class="kw">software architectures</span> in the Middle Platform (Shared Services) Department, eliminating redundant development across business lines; owned UI/UX design for internal management systems.</span><span class="zh-line">在中台部门负责可扩展软件架构设计，消除业务线重复开发；兼顾内部管理系统 UI/UX 设计。</span></li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top"><div class="job-title"><span class="en">Embedded Systems Intern</span><span class="zh">嵌入式系统实习生</span></div><div class="job-date">Jun 2023 – Aug 2023</div></div>
+        <div class="job-org"><span class="en">Hunan Zhicheng Huishang Information Technology Co., Ltd. · Hunan</span><span class="zh">湖南智城慧商信息技术有限公司 · 湖南</span></div>
+        <ul>
+          <li><span class="en">Hands-on work with <span class="kw">STM32</span> microcontrollers; developed and debugged stepper-motor control logic, building foundational hardware–software integration experience.</span><span class="zh-line">实操 STM32 微控制器，开发并调试步进电机控制逻辑，积累软硬件结合底层经验。</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>Education <span class="zh">教育背景</span></h2>
+      <div class="edu">
+        <div class="job-top"><div class="job-title"><span class="en">Xi'an Jiaotong-Liverpool University (XJTLU)</span><span class="zh">西交利物浦大学</span></div><div class="job-date">Sep 2026 – Present</div></div>
+        <div class="edu-degree"><span class="en">MSc Artificial Intelligence</span><span class="zh">人工智能 理学硕士</span></div>
+      </div>
+      <div class="edu">
+        <div class="job-top"><div class="job-title"><span class="en">South East Technological University (SETU), Ireland</span><span class="zh">爱尔兰东南理工大学</span></div><div class="job-date">Sep 2022 – Jun 2026</div></div>
+        <div class="edu-degree"><span class="en">BSc (Hons) Software Development · Second-Class Honours (2:2)</span><span class="zh">软件开发荣誉学士 · 二等二学位</span></div>
+        <div class="edu-note"><span class="en">5 years in Ireland (1-year foundation + 4-year BSc). Core: Programming (Python/Java/C++), Algorithms &amp; Data Structures, AI, Cloud Development, Software Architecture.</span><span class="zh-line">爱尔兰 5 年（1 年预科 + 4 年本科）。核心课程：编程（Python/Java/C++）、算法与数据结构、人工智能、云开发、软件架构。</span></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>Activities <span class="zh">校园活动</span></h2>
+      <div class="act">
+        <h3><span class="en">Chinese Student Community Liaison (official university role)</span><span class="zh">中国学生社区官方联络人（校方任命）</span></h3>
+        <div class="meta">SETU, Ireland · 2024 – 2026</div>
+        <div class="desc"><span class="en">Appointed by SETU as primary contact bridging the international office and Chinese students; represented students in university interviews and cultural consultations.</span><span class="zh-line">获 SETU 官方任命为中国学生首席联络人，作为国际办公室与学生群体的沟通桥梁，代表学生接受校方采访及文化咨询。</span></div>
+      </div>
+      <div class="act">
+        <h3><span class="en">Lead Organizer — International Day Chinese Pavilion</span><span class="zh">国际日中国文化展台 · 主组织者</span></h3>
+        <div class="meta">SETU, Ireland · 2025 &amp; 2026</div>
+        <div class="desc"><span class="en">Led the Chinese pavilion for two consecutive years, engaging 100+ visitors with calligraphy, costume and cuisine — one of the most popular booths on campus.</span><span class="zh-line">连续两年担任中国展台主组织者，通过书法、传统服饰与美食接待上百名国际师生，使中国展台成为全场最受欢迎的展台之一。</span></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  var body=document.body;
+  function setLang(mode){
+    body.classList.remove('bilingual','only-en','only-zh');
+    body.classList.add(mode);
+    ['lg-bi','lg-en','lg-zh'].forEach(function(id){document.getElementById(id).classList.remove('active')});
+    document.getElementById(mode==='only-en'?'lg-en':mode==='only-zh'?'lg-zh':'lg-bi').classList.add('active');
+    try{localStorage.setItem('zw-cv-lang',mode)}catch(e){}
+  }
+  document.getElementById('lg-bi').onclick=function(){setLang('bilingual')};
+  document.getElementById('lg-en').onclick=function(){setLang('only-en')};
+  document.getElementById('lg-zh').onclick=function(){setLang('only-zh')};
+  try{var l=localStorage.getItem('zw-cv-lang');if(l)setLang(l)}catch(e){}
+})();
+</script>
+</body>
+</html>
