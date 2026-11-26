@@ -8,7 +8,7 @@
 <title>Zihan Wang — Interactive CV</title>
 <meta name="description" content="Zihan Wang (王子涵) — MSc Artificial Intelligence, XJTLU. A minimal, scroll-driven interactive CV.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="css/3d.css?v=noblurfixv20261126">
+<link rel="stylesheet" href="css/3d.css?v=exifv20261126">
 </head>
 <body class="lang-en">
 
@@ -32,7 +32,6 @@
     <a href="#contact"><span class="en">CONTACT</span><span class="zh">联系</span></a>
   </nav>
   <div class="tools">
-    <a class="quiet" href="classic.html"><span class="en">CLASSIC</span><span class="zh">经典版</span></a>
     <button id="lang-toggle" class="quiet" type="button" aria-label="Switch language">
       <span class="en">中文</span><span class="zh">EN</span>
     </button>
@@ -636,7 +635,7 @@
           <input type="file" id="drone-file" accept="image/*" hidden>
           <span class="drone-readout" id="drone-readout" aria-live="polite"></span>
         </div>
-        <p class="drone-nav-note" id="drone-nav-note"><span class="en">We also work on image-based navigation — a photo carrying location metadata can be opened straight in a map. Upload one to try it.</span><span class="zh">我们也做图像导航 — 带有位置元数据的照片可以直接在地图中打开。上传一张即可体验。</span></p>
+        <p class="drone-nav-note" id="drone-nav-note"><span class="en">We also work on image-based navigation — any photo with coordinates kept in its metadata can be opened straight in a map. Upload one to try it.</span><span class="zh">我们也做图像导航 — 只要图片里保留经纬度元数据，就可以直接在地图中打开。上传一张即可体验。</span></p>
         <div class="drone-maps" id="drone-maps" aria-disabled="true" hidden>
           <a href="#" target="_blank" rel="noopener" data-map="amap" aria-disabled="true"><span class="en">Amap</span><span class="zh">高德</span></a>
           <a href="#" target="_blank" rel="noopener" data-map="baidu" aria-disabled="true"><span class="en">Baidu</span><span class="zh">百度</span></a>
@@ -770,18 +769,18 @@
   }
 }
 </script>
-<script src="js/3d.js?v=noblurfixv20261126"></script>
-<script type="module" src="js/twin.js?v=noblurfixv20261126"></script>
-<script src="js/ta.js?v=noblurfixv20261126"></script>
-<script src="js/bid.js?v=noblurfixv20261126"></script>
-<script src="js/oec-card.js?v=noblurfixv20261126"></script>
-<script src="js/rtu-card.js?v=noblurfixv20261126"></script>
+<script src="js/3d.js?v=exifv20261126"></script>
+<script type="module" src="js/twin.js?v=exifv20261126"></script>
+<script src="js/ta.js?v=exifv20261126"></script>
+<script src="js/bid.js?v=exifv20261126"></script>
+<script src="js/oec-card.js?v=exifv20261126"></script>
+<script src="js/rtu-card.js?v=exifv20261126"></script>
 <script src="js/drone-temps.js?v=drone11v20261125"></script>
-<script src="js/drone-card.js?v=noblurfixv20261126"></script>
-<script src="js/ux-card.js?v=noblurfixv20261126"></script>
-<script src="js/stepper-card.js?v=noblurfixv20261126"></script>
-<script src="js/ai-twin.js?v=noblurfixv20261126"></script>
-<script type="module" src="js/lazy3d.js?v=noblurfixv20261126"></script>
+<script src="js/drone-card.js?v=exifv20261126"></script>
+<script src="js/ux-card.js?v=exifv20261126"></script>
+<script src="js/stepper-card.js?v=exifv20261126"></script>
+<script src="js/ai-twin.js?v=exifv20261126"></script>
+<script type="module" src="js/lazy3d.js?v=exifv20261126"></script>
 <script>
 /* 手机端流畅访问：同一套页面的离线缓存，不另做简版。 */
 if ('serviceWorker' in navigator) {

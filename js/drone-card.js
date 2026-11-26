@@ -214,14 +214,18 @@
   const navNote = document.getElementById('drone-nav-note');
   const mapsBox = document.getElementById('drone-maps');
   const mapLinks = Array.prototype.slice.call(document.querySelectorAll('.drone-maps a[data-map]'));
-  let coords = null, lastMsg = 'none';
+  let coords = null, lastMsg = 'none', uploadSeq = 0;
 
   function say(key) {
     lastMsg = key;
     if (!readout) return;
     const dict = {
       none:   ['', ''],
-      noexif: ['No location in this image.', '此图像不含定位信息。'],
+      reading:['Checking image metadata…', '正在读取图像元数据…'],
+      noexif: ['No longitude/latitude metadata found in this image.', '这张图片里没有读到经纬度元数据。'],
+      stripped:['This format or transfer often removes metadata. Coordinates are read whenever the file still contains them.', '这种格式或转发过程常会清除元数据；只要文件里确实保留了经纬度，仍可读取。'],
+      exifnogps:['Image metadata found, but no longitude/latitude coordinates.', '图像有元数据，但没有经纬度坐标。'],
+      unsupported:['Could not parse this image format.', '无法解析这种图像格式。'],
       bad:    ['Could not read the file.', '无法读取该文件。'],
       found:  ['Location found — open in a map:', '已读取到位置 — 在地图中打开：'],
     };
@@ -310,12 +314,204 @@
     return { lat: lat, lng: lng };
   }
 
-  /* ---------- 上传：本地预览 + 读 GPS ---------- */
+  /* ---------- 通用坐标读取：HEIC / PNG / WebP / TIFF / XMP ---------- */
+  let exifrPromise = null;
+  function loadExifr() {
+    if (window.exifr && typeof window.exifr.gps === 'function') return Promise.resolve(window.exifr);
+    if (!exifrPromise) {
+      exifrPromise = new Promise(function (resolve, reject) {
+        const s = document.createElement('script');
+        s.src = 'js/vendor/exifr.full.umd.js?v=exifv20261126';
+        s.async = true;
+        s.onload = function () {
+          if (window.exifr && typeof window.exifr.gps === 'function') resolve(window.exifr);
+          else { exifrPromise = null; reject(new Error('EXIF parser unavailable')); }
+        };
+        s.onerror = function () { exifrPromise = null; reject(new Error('EXIF parser failed to load')); };
+        document.head.appendChild(s);
+      });
+    }
+    return exifrPromise;
+  }
+
+  function sniffFormat(buffer, file) {
+    try {
+      const dv = new DataView(buffer);
+      const four = function (o) {
+        return [0, 1, 2, 3].map(function (i) { return String.fromCharCode(dv.getUint8(o + i)); }).join('');
+      };
+      if (dv.getUint8(0) === 0xFF && dv.getUint8(1) === 0xD8) return 'jpeg';
+      if (four(0) === '\u0089PNG') return 'png';
+      if (four(0) === 'RIFF' && four(8) === 'WEBP') return 'webp';
+      if (four(4) === 'ftyp') {
+        const brand = four(8);
+        if (/^(avif|avis)$/.test(brand)) return 'avif';
+        return 'heic';
+      }
+      if (four(0) === 'II*\u0000' || four(0) === 'MM\u0000*') return 'tiff';
+    } catch (e) {}
+    return (file && file.type ? file.type.split('/').pop() : '').toLowerCase() || 'unknown';
+  }
+
+  function webpExifOffset(buffer) {
+    try {
+      const dv = new DataView(buffer);
+      const four = function (o) {
+        return [0, 1, 2, 3].map(function (i) { return String.fromCharCode(dv.getUint8(o + i)); }).join('');
+      };
+      if (four(0) !== 'RIFF' || four(8) !== 'WEBP') return null;
+      let off = 12;
+      while (off + 8 <= dv.byteLength) {
+        const type = four(off);
+        const size = dv.getUint32(off + 4, true);
+        const data = off + 8;
+        if (data + size > dv.byteLength) break;
+        if (type === 'EXIF') {
+          let p = data;
+          if (dv.getUint32(p, false) === 0x45786966 && dv.getUint16(p + 4, false) === 0) p += 6;
+          return p;
+        }
+        off = data + size + (size % 2);
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function webpXmpText(buffer) {
+    try {
+      const dv = new DataView(buffer);
+      const four = function (o) {
+        return [0, 1, 2, 3].map(function (i) { return String.fromCharCode(dv.getUint8(o + i)); }).join('');
+      };
+      if (four(0) !== 'RIFF' || four(8) !== 'WEBP') return null;
+      let off = 12;
+      while (off + 8 <= dv.byteLength) {
+        const type = four(off);
+        const size = dv.getUint32(off + 4, true);
+        const data = off + 8;
+        if (data + size > dv.byteLength) break;
+        if (type === 'XMP ') {
+          let text = '';
+          for (let i = 0; i < size; i++) text += String.fromCharCode(dv.getUint8(data + i));
+          return text;
+        }
+        off = data + size + (size % 2);
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function xmpValue(text, tag) {
+    if (!text) return null;
+    let m = new RegExp('(?:[\\w.-]+:)?' + tag + '\\s*=\\s*(["\'])(.*?)\\1', 'i').exec(text);
+    if (m) return m[2];
+    m = new RegExp('<(?:[\\w.-]+:)?' + tag + '\\s*>([^<]+)</(?:[\\w.-]+:)?' + tag + '\\s*>', 'i').exec(text);
+    return m ? m[1] : null;
+  }
+
+  function coordsFromXmp(text) {
+    if (!text) return null;
+    const latRaw = xmpValue(text, 'GPSLatitude') || xmpValue(text, 'latitude');
+    const lngRaw = xmpValue(text, 'GPSLongitude') || xmpValue(text, 'longitude');
+    let lat = coordinateNumber(latRaw), lng = coordinateNumber(lngRaw);
+    const latRef = xmpValue(text, 'GPSLatitudeRef'), lngRef = xmpValue(text, 'GPSLongitudeRef');
+    if (latRef && /S/i.test(latRef)) lat = -Math.abs(lat);
+    if (lngRef && /W/i.test(lngRef)) lng = -Math.abs(lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    if (Math.abs(lat) > 90 || Math.abs(lng) > 180) return null;
+    return { lat: lat, lng: lng };
+  }
+
+  function coordinateNumber(v) {
+    if (v == null || v === '') return NaN;
+    if (Array.isArray(v)) {
+      if (!v.length) return NaN;
+      if (v.length === 1) return Number(v[0]);
+      let n = 0;
+      for (let i = 0; i < v.length; i++) n += Number(v[i]) / Math.pow(60, i);
+      return n;
+    }
+    if (typeof v === 'string') {
+      const parts = v.match(/-?\d+(?:\.\d+)?/g);
+      if (!parts || !parts.length) return NaN;
+      let n = parts.length === 1 ? Number(parts[0]) : 0;
+      if (parts.length > 1) for (let i = 0; i < parts.length; i++) n += Number(parts[i]) / Math.pow(60, i);
+      if (/[SW]/i.test(v)) n = -Math.abs(n);
+      return n;
+    }
+    return Number(v);
+  }
+
+  function pickCoord(obj, names) {
+    for (let i = 0; i < names.length; i++) {
+      if (obj && obj[names[i]] != null && obj[names[i]] !== '') return obj[names[i]];
+    }
+    return null;
+  }
+
+  function coordsFromMeta(meta) {
+    if (!meta) return null;
+    let latRaw = pickCoord(meta, ['latitude', 'GPSLatitude', 'GPS:Latitude', 'GPSLatitudeDecimal', 'lat']);
+    let lngRaw = pickCoord(meta, ['longitude', 'GPSLongitude', 'GPS:Longitude', 'GPSLongitudeDecimal', 'lng', 'lon']);
+    if ((latRaw == null || lngRaw == null) && meta.GPS && typeof meta.GPS === 'object') {
+      if (latRaw == null) latRaw = pickCoord(meta.GPS, ['latitude', 'Latitude', 'GPSLatitude']);
+      if (lngRaw == null) lngRaw = pickCoord(meta.GPS, ['longitude', 'Longitude', 'GPSLongitude']);
+    }
+    let lat = coordinateNumber(latRaw), lng = coordinateNumber(lngRaw);
+    const latRef = pickCoord(meta, ['GPSLatitudeRef', 'GPS:LatitudeRef', 'latRef']);
+    const lngRef = pickCoord(meta, ['GPSLongitudeRef', 'GPS:LongitudeRef', 'lngRef']);
+    if (latRef && /S/i.test(String(latRef))) lat = -Math.abs(lat);
+    if (lngRef && /W/i.test(String(lngRef))) lng = -Math.abs(lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    if (Math.abs(lat) > 90 || Math.abs(lng) > 180) return null;
+    return { lat: lat, lng: lng };
+  }
+
+  async function readLocation(file, buffer) {
+    const native = readExifGps(buffer);
+    if (native) return { coords: native };
+
+    const webpTiff = webpExifOffset(buffer);
+    if (webpTiff != null) {
+      try {
+        const webpCoords = parseTiff(new DataView(buffer), webpTiff);
+        if (webpCoords) return { coords: webpCoords };
+      } catch (e) {}
+    }
+    const webpXmp = webpXmpText(buffer);
+    if (webpXmp) {
+      const webpCoords = coordsFromXmp(webpXmp);
+      if (webpCoords) return { coords: webpCoords };
+    }
+
+    const exifr = await loadExifr();
+    let gps = null;
+    try { gps = await exifr.gps(buffer); } catch (e) {}
+    if (gps && Number.isFinite(Number(gps.latitude)) && Number.isFinite(Number(gps.longitude))) {
+      return { coords: { lat: Number(gps.latitude), lng: Number(gps.longitude) } };
+    }
+
+    let meta = null;
+    try {
+      meta = await exifr.parse(buffer, { tiff: true, xmp: true, iptc: false, jfif: false, ihdr: false });
+    } catch (e) {}
+    const metaCoords = coordsFromMeta(meta);
+    if (metaCoords) return { coords: metaCoords };
+
+    return {
+      coords: null,
+      fmt: sniffFormat(buffer, file),
+      hasMeta: !!(meta && Object.keys(meta).length) || webpTiff != null || !!webpXmp
+    };
+  }
+
+  /* ---------- 上传：本地预览 + 读坐标 ---------- */
   const fileInput = document.getElementById('drone-file');
   if (fileInput) fileInput.addEventListener('change', function () {
     const f = fileInput.files && fileInput.files[0];
     if (!f) return;
-    coords = null; updateMaps();
+    const seq = ++uploadSeq;
+    coords = null; updateMaps(); say('reading');
     const user = document.getElementById('drone-user-img');
     const url = URL.createObjectURL(f);
     if (user) {
@@ -335,8 +531,8 @@
     if (descEl) {
       const zh = document.body.classList.contains('lang-zh');
       descEl.textContent = zh
-        ? '图像只在你的浏览器里预览，不会上传。若有定位元数据，下方地图按钮会亮起。'
-        : 'Your image previews locally and is never uploaded. If it carries location metadata, the map links below will light up.';
+        ? '图像只在你的浏览器里预览，不会上传。只要文件里保留经纬度，下方地图按钮就会亮起。'
+        : 'Your image previews locally and is never uploaded. Map links light up whenever the file keeps its coordinates.';
     }
     if (stackEl) stackEl.textContent = '';
     listBtns.forEach(function (b) { b.classList.remove('on'); });
@@ -344,11 +540,28 @@
     if (shot) shot.classList.remove('probing');
     const reader = new FileReader();
     reader.onload = function () {
-      const gps = readExifGps(reader.result);
-      if (gps) { coords = gps; say('found'); } else say('noexif');
-      updateMaps();
+      if (seq !== uploadSeq) return;
+      readLocation(f, reader.result).then(function (result) {
+        if (seq !== uploadSeq) return;
+        if (result.coords) {
+          coords = result.coords;
+          say('found');
+        } else if (result.hasMeta) {
+          say('exifnogps');
+        } else if (/^(heic|heif|avif|png|webp)$/.test(result.fmt)) {
+          say('stripped');
+        } else {
+          say('noexif');
+        }
+        updateMaps();
+      }).catch(function (err) {
+        if (seq !== uploadSeq) return;
+        console.warn('Location read failed', err);
+        say('unsupported');
+        updateMaps();
+      });
     };
-    reader.onerror = function () { say('bad'); };
+    reader.onerror = function () { if (seq === uploadSeq) say('bad'); };
     reader.readAsArrayBuffer(f);
   });
 
@@ -362,8 +575,8 @@
         if (userImage) {
           const zh = document.body.classList.contains('lang-zh');
           if (descEl) descEl.textContent = zh
-            ? '图像只在你的浏览器里预览，不会上传。若有定位元数据，下方地图按钮会亮起。'
-            : 'Your image previews locally and is never uploaded. If it carries location metadata, the map links below will light up.';
+            ? '图像只在你的浏览器里预览，不会上传。只要文件里保留经纬度，下方地图按钮就会亮起。'
+            : 'Your image previews locally and is never uploaded. Map links light up whenever the file keeps its coordinates.';
           if (probeVal) probeVal.innerHTML = (zh ? '模拟值' : 'SIMULATED');
         } else render(current, false);
         say(lastMsg);
