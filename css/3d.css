@@ -1796,3 +1796,40 @@ body.js .reveal.in{ opacity:1; transform:none; }
   .ai-twin-status{ left:13px; }
   .ai-twin-note{ padding:0 16px 14px; font-size:10px; }
 }
+
+/* ============================================================
+   手机端最终修复：iOS Safari 的 backdrop-filter 在圆角卡片 + 任何
+   叠加元素处会出现透镜采样/白色光斑。这里不再让卡片自己采样背景，
+   改用不透明度和噪点模拟同一套磨砂质感；关闭键也去掉所有底色与
+   高光，只保留一个干净的 ×。桌面版完全不受影响。
+   ============================================================ */
+@media (max-width:760px){
+  .ta-card, .twin-card, .oec-card, .rtu-card, .stepper-card, .drone-card, #hotspot-card{
+    -webkit-backdrop-filter:none !important;
+    backdrop-filter:none !important;
+    box-shadow:0 18px 48px rgba(17,19,17,.12) !important;
+  }
+  .ta-card:not(.oec-card), .twin-card, .rtu-card, .stepper-card, .drone-card, #hotspot-card{
+    border-color:rgba(255,255,255,.72) !important;
+    background:linear-gradient(155deg,rgba(255,255,255,.90),rgba(255,255,255,.78)), var(--frost) !important;
+  }
+  .oec-card{
+    border-color:rgba(190,215,235,.34) !important;
+    background:linear-gradient(155deg,rgba(24,39,62,.94),rgba(9,17,31,.90)), var(--frost) !important;
+  }
+  .ta-close, .twin-close{
+    width:36px; height:36px;
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    -webkit-backdrop-filter:none !important;
+    backdrop-filter:none !important;
+    color:#20251f !important;
+    font-size:22px;
+    text-shadow:0 1px 2px rgba(255,255,255,.9);
+  }
+  .oec-card .ta-close{
+    color:#e8eef5 !important;
+    text-shadow:0 1px 2px rgba(0,0,0,.5);
+  }
+}
